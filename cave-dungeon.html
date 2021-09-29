@@ -1,0 +1,1616 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><link rel="icon" href="images/favicon_cave.png"></head>
+<body>
+    <a href="index.html" class="searchedHeading">Goggle</a>
+    <hr>
+</body>
+<head>
+<link rel="stylesheet" href="css/styles.css">
+<title>Cave Dungeon</title>
+<link rel="icon" href="images/favicon_cave.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+<style>
+html, body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: black;
+}
+
+#game-wrapper {
+    max-width: 100vh;
+    max-height: 100vw;
+    margin: 0 auto;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+canvas {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+}
+</style>
+
+<script>
+window.GAME_DATA = {"errorState":"","version":1,"currentSpriteIndex":7,"spriteList":[{"name":"avatar","isAvatar":true,"isWall":false,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,1,0],[0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,1,0]],"scriptList":{"on-push":"","on-message":""}},{"name":"floor","isAvatar":false,"isWall":false,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1]],"scriptList":{"on-push":"","on-message":""}},{"name":"wall","isAvatar":false,"isWall":true,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"scriptList":{"on-push":"","on-message":""}},{"name":"apple","isAvatar":false,"isWall":false,"isItem":true,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"scriptList":{"on-push":"You have picked up {item-count {sprite-name}} {sprite-name}s!","on-message":""}},{"name":"ur-mom","isAvatar":false,"isWall":true,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,0,1,0,1,0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0]],"scriptList":{"on-push":"{shaky}Hi i'm Ur Mom.{/shaky}\n{wavy}You must find the end of the cave to beat the dungeon!{/wavy}","on-message":""}},{"name":"cyclops","isAvatar":false,"isWall":false,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0]],"scriptList":{"on-push":"{color [color]}Hello my name is Cyclops the kid boi! I will tell you what the room number is. The room number is 1-2.{/color}","on-message":""}},{"name":"ur-mom2","isAvatar":false,"isWall":false,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0]],"scriptList":{"on-push":"{shaky}Hello again You.{/shaky}\n{wavy}You are getting CLOSER{/wavy}\n{color [color]}hee you need to get to room 5-5{/color}\n{shaky}This is room 3-2!{/shaky}","on-message":""}},{"name":"ending-mom","isAvatar":false,"isWall":false,"isItem":false,"isTransparent":false,"colorIndex":1,"width":8,"height":8,"frameList":[[0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,0,0,0,0,1,1,0,1,1,0,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,0,0]],"scriptList":{"on-push":"{shaky}You have finished through the Cave \nDungeon! There will be updates to this game regularly so check back for those. Bye!{/shaky}","on-message":""}}],"spriteWidth":8,"spriteHeight":8,"currentRoomIndex":4,"roomList":[{"name":"room-1-1","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":6,"y":5},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":8,"y":8},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":10,"y":9},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":15,"y":14},{"spriteName":"wall","x":15,"y":13},{"spriteName":"wall","x":14,"y":12},{"spriteName":"wall","x":13,"y":11},{"spriteName":"wall","x":12,"y":10},{"spriteName":"wall","x":11,"y":9},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":8,"y":6},{"spriteName":"wall","x":7,"y":5},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":5,"y":3},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":2,"y":0},{"spriteName":"wall","x":0,"y":2},{"spriteName":"wall","x":1,"y":3},{"spriteName":"wall","x":2,"y":4},{"spriteName":"wall","x":3,"y":5},{"spriteName":"wall","x":4,"y":6},{"spriteName":"wall","x":5,"y":7},{"spriteName":"wall","x":6,"y":8},{"spriteName":"wall","x":7,"y":9},{"spriteName":"wall","x":8,"y":10},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":10,"y":12},{"spriteName":"wall","x":11,"y":13},{"spriteName":"wall","x":12,"y":14},{"spriteName":"wall","x":13,"y":15},{"spriteName":"ur-mom","x":12,"y":11},{"spriteName":"avatar","x":0,"y":0}],"scriptList":{"on-enter":"Room 1-1","on-exit":""}},{"name":"room-2-1","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":2,"y":4},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":4,"y":2},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":3,"y":5},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":6,"y":0},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":6,"y":5},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":10,"y":9},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":1,"y":3},{"spriteName":"apple","x":12,"y":14},{"spriteName":"apple","x":11,"y":14},{"spriteName":"apple","x":14,"y":14},{"spriteName":"wall","x":3,"y":14},{"spriteName":"wall","x":3,"y":13},{"spriteName":"wall","x":3,"y":12},{"spriteName":"wall","x":3,"y":11},{"spriteName":"wall","x":2,"y":11},{"spriteName":"wall","x":1,"y":11},{"spriteName":"wall","x":0,"y":11},{"spriteName":"wall","x":0,"y":10},{"spriteName":"wall","x":0,"y":9},{"spriteName":"wall","x":0,"y":8},{"spriteName":"wall","x":0,"y":7},{"spriteName":"wall","x":0,"y":6},{"spriteName":"wall","x":0,"y":5},{"spriteName":"wall","x":0,"y":4},{"spriteName":"wall","x":0,"y":3},{"spriteName":"wall","x":0,"y":2},{"spriteName":"wall","x":0,"y":1},{"spriteName":"wall","x":0,"y":0},{"spriteName":"wall","x":15,"y":1},{"spriteName":"wall","x":15,"y":2},{"spriteName":"wall","x":15,"y":3},{"spriteName":"wall","x":15,"y":5},{"spriteName":"wall","x":15,"y":6},{"spriteName":"wall","x":15,"y":7},{"spriteName":"wall","x":15,"y":8},{"spriteName":"wall","x":15,"y":9},{"spriteName":"wall","x":15,"y":10},{"spriteName":"wall","x":15,"y":11},{"spriteName":"wall","x":15,"y":12},{"spriteName":"wall","x":15,"y":13},{"spriteName":"wall","x":15,"y":14},{"spriteName":"wall","x":15,"y":15},{"spriteName":"wall","x":14,"y":15},{"spriteName":"wall","x":13,"y":15},{"spriteName":"wall","x":12,"y":15},{"spriteName":"wall","x":11,"y":15},{"spriteName":"wall","x":9,"y":15},{"spriteName":"wall","x":8,"y":15},{"spriteName":"wall","x":7,"y":15},{"spriteName":"wall","x":10,"y":15},{"spriteName":"wall","x":10,"y":14},{"spriteName":"wall","x":10,"y":13},{"spriteName":"wall","x":9,"y":13},{"spriteName":"wall","x":13,"y":14},{"spriteName":"wall","x":13,"y":13},{"spriteName":"wall","x":5,"y":14},{"spriteName":"wall","x":5,"y":13},{"spriteName":"wall","x":5,"y":12},{"spriteName":"wall","x":5,"y":11},{"spriteName":"wall","x":6,"y":11},{"spriteName":"wall","x":7,"y":11},{"spriteName":"wall","x":8,"y":11},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":10,"y":11},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":12,"y":11},{"spriteName":"wall","x":13,"y":11},{"spriteName":"wall","x":14,"y":11},{"spriteName":"wall","x":5,"y":8},{"spriteName":"wall","x":6,"y":8},{"spriteName":"wall","x":2,"y":8},{"spriteName":"wall","x":3,"y":8},{"spriteName":"wall","x":2,"y":7},{"spriteName":"wall","x":7,"y":8},{"spriteName":"wall","x":8,"y":8},{"spriteName":"wall","x":9,"y":8},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":11,"y":8},{"spriteName":"wall","x":12,"y":8},{"spriteName":"wall","x":13,"y":8},{"spriteName":"wall","x":14,"y":8},{"spriteName":"apple","x":14,"y":9},{"spriteName":"apple","x":14,"y":10},{"spriteName":"wall","x":3,"y":4},{"spriteName":"wall","x":14,"y":1},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":12,"y":1},{"spriteName":"wall","x":11,"y":1},{"spriteName":"wall","x":10,"y":1},{"spriteName":"wall","x":9,"y":1},{"spriteName":"wall","x":8,"y":1},{"spriteName":"wall","x":7,"y":1},{"spriteName":"wall","x":6,"y":1},{"spriteName":"wall","x":5,"y":1},{"spriteName":"wall","x":4,"y":1},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":2,"y":1}],"scriptList":{"on-enter":"Room 2-1","on-exit":""}},{"name":"room-3-1","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":0,"y":1},{"spriteName":"wall","x":0,"y":2},{"spriteName":"wall","x":1,"y":3},{"spriteName":"wall","x":2,"y":4},{"spriteName":"wall","x":1,"y":4},{"spriteName":"wall","x":0,"y":4},{"spriteName":"wall","x":2,"y":5},{"spriteName":"wall","x":3,"y":6},{"spriteName":"wall","x":4,"y":7},{"spriteName":"wall","x":3,"y":3},{"spriteName":"wall","x":2,"y":2},{"spriteName":"wall","x":2,"y":3},{"spriteName":"wall","x":1,"y":5},{"spriteName":"wall","x":9,"y":5},{"spriteName":"wall","x":9,"y":6},{"spriteName":"wall","x":10,"y":6},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":10,"y":5},{"spriteName":"wall","x":11,"y":5},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":12,"y":4},{"spriteName":"wall","x":13,"y":5},{"spriteName":"wall","x":14,"y":4},{"spriteName":"wall","x":12,"y":5},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":8,"y":8},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":8,"y":1},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":4,"y":2},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":3,"y":11},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":13,"y":11},{"spriteName":"apple","x":11,"y":3},{"spriteName":"apple","x":2,"y":11},{"spriteName":"apple","x":12,"y":10},{"spriteName":"apple","x":12,"y":1},{"spriteName":"apple","x":7,"y":11},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":0,"y":0},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":3,"y":5},{"spriteName":"wall","x":6,"y":6},{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":5,"y":3},{"spriteName":"wall","x":3,"y":2},{"spriteName":"wall","x":2,"y":6},{"spriteName":"wall","x":5,"y":8},{"spriteName":"wall","x":5,"y":7},{"spriteName":"wall","x":5,"y":6},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":4,"y":5},{"spriteName":"wall","x":4,"y":4},{"spriteName":"wall","x":4,"y":3},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":4,"y":6},{"spriteName":"wall","x":0,"y":9},{"spriteName":"wall","x":1,"y":9},{"spriteName":"wall","x":2,"y":9},{"spriteName":"wall","x":3,"y":9},{"spriteName":"wall","x":4,"y":9},{"spriteName":"wall","x":3,"y":8},{"spriteName":"wall","x":2,"y":8},{"spriteName":"wall","x":1,"y":7},{"spriteName":"wall","x":6,"y":10},{"spriteName":"wall","x":7,"y":7},{"spriteName":"wall","x":8,"y":5},{"spriteName":"wall","x":9,"y":1},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":13,"y":1},{"spriteName":"wall","x":15,"y":4},{"spriteName":"wall","x":15,"y":5},{"spriteName":"wall","x":15,"y":6},{"spriteName":"wall","x":15,"y":7},{"spriteName":"wall","x":15,"y":8},{"spriteName":"wall","x":14,"y":8},{"spriteName":"wall","x":14,"y":9},{"spriteName":"wall","x":14,"y":10},{"spriteName":"wall","x":14,"y":11},{"spriteName":"wall","x":15,"y":11},{"spriteName":"wall","x":15,"y":12},{"spriteName":"wall","x":15,"y":13},{"spriteName":"wall","x":14,"y":14},{"spriteName":"wall","x":14,"y":13},{"spriteName":"wall","x":14,"y":12},{"spriteName":"wall","x":14,"y":7},{"spriteName":"wall","x":15,"y":9},{"spriteName":"wall","x":15,"y":10},{"spriteName":"wall","x":15,"y":14},{"spriteName":"wall","x":15,"y":15},{"spriteName":"wall","x":14,"y":15},{"spriteName":"wall","x":15,"y":0},{"spriteName":"wall","x":0,"y":15},{"spriteName":"wall","x":1,"y":15},{"spriteName":"wall","x":2,"y":15},{"spriteName":"wall","x":3,"y":15},{"spriteName":"wall","x":4,"y":15},{"spriteName":"wall","x":5,"y":15},{"spriteName":"wall","x":6,"y":15},{"spriteName":"wall","x":7,"y":15},{"spriteName":"wall","x":8,"y":15},{"spriteName":"wall","x":9,"y":15},{"spriteName":"wall","x":10,"y":15},{"spriteName":"wall","x":11,"y":15},{"spriteName":"wall","x":12,"y":15},{"spriteName":"wall","x":13,"y":15}],"scriptList":{"on-enter":"Room 3-1","on-exit":""}},{"name":"room-4-1","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":8,"y":9},{"spriteName":"wall","x":8,"y":8},{"spriteName":"wall","x":9,"y":8},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":11,"y":5},{"spriteName":"wall","x":12,"y":6},{"spriteName":"wall","x":13,"y":6},{"spriteName":"wall","x":12,"y":5},{"spriteName":"wall","x":12,"y":4},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":9,"y":4},{"spriteName":"wall","x":10,"y":5},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":3},{"spriteName":"wall","x":5,"y":3},{"spriteName":"wall","x":6,"y":3},{"spriteName":"wall","x":4,"y":3},{"spriteName":"wall","x":3,"y":4},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":5,"y":6},{"spriteName":"wall","x":6,"y":7},{"spriteName":"wall","x":7,"y":6},{"spriteName":"wall","x":8,"y":7},{"spriteName":"wall","x":9,"y":6},{"spriteName":"wall","x":8,"y":4},{"spriteName":"wall","x":7,"y":5},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":6,"y":2},{"spriteName":"wall","x":6,"y":1},{"spriteName":"wall","x":5,"y":1},{"spriteName":"wall","x":5,"y":2},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":3,"y":0},{"spriteName":"wall","x":4,"y":0},{"spriteName":"wall","x":5,"y":0},{"spriteName":"wall","x":4,"y":1},{"spriteName":"wall","x":2,"y":2},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":3,"y":12},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":15,"y":12},{"spriteName":"floor","x":12,"y":11},{"spriteName":"wall","x":10,"y":9}],"scriptList":{"on-enter":"Room 4-1","on-exit":""}},{"name":"room-5-1","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":6,"y":0},{"spriteName":"wall","x":7,"y":0},{"spriteName":"wall","x":6,"y":1},{"spriteName":"wall","x":7,"y":2},{"spriteName":"wall","x":8,"y":2},{"spriteName":"wall","x":7,"y":3},{"spriteName":"wall","x":8,"y":3},{"spriteName":"wall","x":7,"y":4},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":7,"y":5},{"spriteName":"wall","x":8,"y":6},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":4,"y":3},{"spriteName":"wall","x":5,"y":3},{"spriteName":"wall","x":4,"y":4},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":4,"y":0},{"spriteName":"wall","x":2,"y":1},{"spriteName":"wall","x":3,"y":0},{"spriteName":"wall","x":2,"y":0},{"spriteName":"wall","x":1,"y":0},{"spriteName":"wall","x":1,"y":1},{"spriteName":"wall","x":7,"y":10},{"spriteName":"wall","x":8,"y":9},{"spriteName":"wall","x":7,"y":9},{"spriteName":"wall","x":9,"y":10},{"spriteName":"wall","x":10,"y":10},{"spriteName":"wall","x":11,"y":10},{"spriteName":"wall","x":10,"y":11},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":11,"y":12},{"spriteName":"wall","x":12,"y":13},{"spriteName":"wall","x":11,"y":14},{"spriteName":"wall","x":12,"y":14},{"spriteName":"wall","x":12,"y":15},{"spriteName":"wall","x":13,"y":15},{"spriteName":"wall","x":14,"y":14},{"spriteName":"wall","x":14,"y":15},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":0,"y":0},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":3,"y":12},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":3,"y":11},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":15,"y":10},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":12,"y":8},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":11,"y":8},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":8,"y":8}],"scriptList":{"on-enter":"Room 5-1","on-exit":""}},{"name":"room-1-2","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":4,"y":6},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":14,"y":14},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":6,"y":8},{"spriteName":"wall","x":6,"y":11},{"spriteName":"wall","x":9,"y":13},{"spriteName":"wall","x":7,"y":14},{"spriteName":"wall","x":1,"y":4},{"spriteName":"wall","x":2,"y":4},{"spriteName":"wall","x":1,"y":1},{"spriteName":"wall","x":1,"y":0},{"spriteName":"wall","x":1,"y":9},{"spriteName":"wall","x":0,"y":13},{"spriteName":"wall","x":6,"y":3},{"spriteName":"wall","x":7,"y":1},{"spriteName":"wall","x":8,"y":2},{"spriteName":"wall","x":8,"y":5},{"spriteName":"wall","x":10,"y":5},{"spriteName":"wall","x":10,"y":7},{"spriteName":"wall","x":11,"y":9},{"spriteName":"wall","x":11,"y":10},{"spriteName":"wall","x":12,"y":14},{"spriteName":"wall","x":13,"y":14},{"spriteName":"wall","x":0,"y":15},{"spriteName":"wall","x":1,"y":15},{"spriteName":"wall","x":2,"y":15},{"spriteName":"wall","x":3,"y":15},{"spriteName":"wall","x":4,"y":15},{"spriteName":"wall","x":5,"y":15},{"spriteName":"wall","x":6,"y":15},{"spriteName":"wall","x":7,"y":15},{"spriteName":"wall","x":8,"y":15},{"spriteName":"wall","x":9,"y":15},{"spriteName":"wall","x":10,"y":15},{"spriteName":"wall","x":11,"y":15},{"spriteName":"wall","x":13,"y":15},{"spriteName":"wall","x":15,"y":15},{"spriteName":"wall","x":14,"y":15},{"spriteName":"cyclops","x":10,"y":12},{"spriteName":"wall","x":0,"y":0},{"spriteName":"wall","x":2,"y":0},{"spriteName":"wall","x":3,"y":0},{"spriteName":"wall","x":4,"y":0},{"spriteName":"wall","x":5,"y":0},{"spriteName":"wall","x":6,"y":0},{"spriteName":"wall","x":7,"y":0},{"spriteName":"wall","x":8,"y":0},{"spriteName":"wall","x":9,"y":0},{"spriteName":"wall","x":10,"y":0},{"spriteName":"wall","x":11,"y":0},{"spriteName":"wall","x":12,"y":0},{"spriteName":"wall","x":13,"y":0}],"scriptList":{"on-enter":"Room 1-2","on-exit":""}},{"name":"room-2-2","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":6,"y":0},{"spriteName":"wall","x":15,"y":0},{"spriteName":"wall","x":14,"y":0},{"spriteName":"wall","x":13,"y":0},{"spriteName":"wall","x":11,"y":0},{"spriteName":"wall","x":12,"y":0},{"spriteName":"wall","x":10,"y":0},{"spriteName":"wall","x":7,"y":0},{"spriteName":"wall","x":8,"y":0},{"spriteName":"wall","x":9,"y":0},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":4,"y":2},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":5,"y":2},{"spriteName":"wall","x":0,"y":6},{"spriteName":"wall","x":0,"y":7},{"spriteName":"wall","x":0,"y":8},{"spriteName":"wall","x":0,"y":9},{"spriteName":"wall","x":0,"y":15},{"spriteName":"wall","x":0,"y":14},{"spriteName":"wall","x":0,"y":13},{"spriteName":"wall","x":0,"y":12},{"spriteName":"wall","x":0,"y":11},{"spriteName":"wall","x":0,"y":10},{"spriteName":"wall","x":1,"y":15},{"spriteName":"wall","x":2,"y":15},{"spriteName":"wall","x":3,"y":15},{"spriteName":"wall","x":4,"y":14},{"spriteName":"wall","x":5,"y":14},{"spriteName":"wall","x":6,"y":14},{"spriteName":"wall","x":7,"y":14},{"spriteName":"wall","x":8,"y":14},{"spriteName":"wall","x":9,"y":14},{"spriteName":"wall","x":10,"y":14},{"spriteName":"wall","x":10,"y":15},{"spriteName":"wall","x":11,"y":15},{"spriteName":"wall","x":12,"y":15},{"spriteName":"wall","x":13,"y":15},{"spriteName":"wall","x":14,"y":15},{"spriteName":"wall","x":4,"y":15},{"spriteName":"wall","x":5,"y":15},{"spriteName":"wall","x":6,"y":15},{"spriteName":"wall","x":7,"y":15},{"spriteName":"wall","x":8,"y":15},{"spriteName":"wall","x":9,"y":15},{"spriteName":"wall","x":15,"y":15},{"spriteName":"wall","x":15,"y":14},{"spriteName":"wall","x":15,"y":13},{"spriteName":"wall","x":15,"y":12},{"spriteName":"wall","x":15,"y":11},{"spriteName":"wall","x":15,"y":10},{"spriteName":"wall","x":15,"y":9},{"spriteName":"wall","x":15,"y":8},{"spriteName":"wall","x":15,"y":7},{"spriteName":"wall","x":15,"y":6},{"spriteName":"wall","x":15,"y":5},{"spriteName":"wall","x":15,"y":4},{"spriteName":"wall","x":15,"y":3},{"spriteName":"wall","x":15,"y":2},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":8,"y":1},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":4,"y":6},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":11,"y":8},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":12,"y":8},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":10,"y":9},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":8},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":5,"y":9},{"spriteName":"wall","x":0,"y":1},{"spriteName":"wall","x":0,"y":2},{"spriteName":"wall","x":0,"y":3},{"spriteName":"wall","x":0,"y":4},{"spriteName":"wall","x":0,"y":5},{"spriteName":"floor","x":0,"y":0},{"spriteName":"wall","x":3,"y":3},{"spriteName":"wall","x":2,"y":3},{"spriteName":"wall","x":1,"y":3},{"spriteName":"wall","x":6,"y":1},{"spriteName":"wall","x":6,"y":2},{"spriteName":"wall","x":6,"y":3},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":6,"y":12},{"spriteName":"wall","x":6,"y":11},{"spriteName":"wall","x":6,"y":10},{"spriteName":"wall","x":6,"y":9},{"spriteName":"wall","x":6,"y":8},{"spriteName":"wall","x":6,"y":7},{"spriteName":"wall","x":6,"y":6},{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":3,"y":12},{"spriteName":"wall","x":3,"y":11},{"spriteName":"wall","x":3,"y":10},{"spriteName":"wall","x":3,"y":9},{"spriteName":"wall","x":3,"y":8},{"spriteName":"wall","x":3,"y":7},{"spriteName":"wall","x":3,"y":6},{"spriteName":"wall","x":3,"y":5},{"spriteName":"wall","x":3,"y":4},{"spriteName":"apple","x":1,"y":4},{"spriteName":"apple","x":2,"y":4},{"spriteName":"apple","x":11,"y":14},{"spriteName":"apple","x":12,"y":14},{"spriteName":"apple","x":13,"y":14},{"spriteName":"wall","x":14,"y":14}],"scriptList":{"on-enter":"Room 2-2","on-exit":""}},{"name":"room-3-2","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":6,"y":7},{"spriteName":"wall","x":6,"y":8},{"spriteName":"wall","x":6,"y":9},{"spriteName":"wall","x":7,"y":11},{"spriteName":"wall","x":6,"y":10},{"spriteName":"wall","x":6,"y":11},{"spriteName":"wall","x":6,"y":12},{"spriteName":"wall","x":7,"y":13},{"spriteName":"wall","x":7,"y":15},{"spriteName":"wall","x":8,"y":14},{"spriteName":"wall","x":7,"y":14},{"spriteName":"wall","x":6,"y":13},{"spriteName":"wall","x":6,"y":14},{"spriteName":"wall","x":7,"y":12},{"spriteName":"wall","x":14,"y":15},{"spriteName":"wall","x":13,"y":15},{"spriteName":"wall","x":14,"y":14},{"spriteName":"wall","x":15,"y":15},{"spriteName":"wall","x":15,"y":14},{"spriteName":"wall","x":8,"y":11},{"spriteName":"wall","x":8,"y":12},{"spriteName":"wall","x":9,"y":12},{"spriteName":"wall","x":10,"y":12},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":11,"y":12},{"spriteName":"wall","x":11,"y":13},{"spriteName":"wall","x":10,"y":14},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":11,"y":8},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":4,"y":2},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":3,"y":5},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":0,"y":0},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":6,"y":0},{"spriteName":"floor","x":7,"y":0},{"spriteName":"ur-mom2","x":1,"y":7}],"scriptList":{"on-enter":"Room 3-2","on-exit":""}},{"name":"room-4-2","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":8,"y":4},{"spriteName":"wall","x":9,"y":3},{"spriteName":"wall","x":11,"y":1},{"spriteName":"wall","x":12,"y":2},{"spriteName":"wall","x":13,"y":2},{"spriteName":"wall","x":10,"y":3},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":11,"y":5},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":10,"y":6},{"spriteName":"wall","x":10,"y":5},{"spriteName":"wall","x":9,"y":6},{"spriteName":"wall","x":10,"y":7},{"spriteName":"wall","x":11,"y":7},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":9,"y":8},{"spriteName":"wall","x":12,"y":6},{"spriteName":"wall","x":12,"y":7},{"spriteName":"wall","x":13,"y":8},{"spriteName":"wall","x":13,"y":7},{"spriteName":"wall","x":14,"y":6},{"spriteName":"wall","x":14,"y":7},{"spriteName":"wall","x":15,"y":8},{"spriteName":"wall","x":15,"y":9},{"spriteName":"wall","x":2,"y":9},{"spriteName":"wall","x":3,"y":10},{"spriteName":"wall","x":3,"y":9},{"spriteName":"wall","x":4,"y":8},{"spriteName":"wall","x":4,"y":7},{"spriteName":"wall","x":4,"y":6},{"spriteName":"wall","x":5,"y":7},{"spriteName":"wall","x":6,"y":6},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":7,"y":3},{"spriteName":"wall","x":8,"y":5},{"spriteName":"wall","x":9,"y":5},{"spriteName":"wall","x":9,"y":4},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":4,"y":2},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":6,"y":0},{"spriteName":"floor","x":6,"y":1},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":2,"y":4},{"spriteName":"floor","x":3,"y":5},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":8,"y":1},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":7,"y":14}],"scriptList":{"on-enter":"Room 4-2","on-exit":""}},{"name":"room-5-2","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":7,"y":6},{"spriteName":"wall","x":7,"y":5},{"spriteName":"wall","x":7,"y":4},{"spriteName":"wall","x":8,"y":7},{"spriteName":"wall","x":8,"y":8},{"spriteName":"wall","x":9,"y":9},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":8,"y":10},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":8,"y":11},{"spriteName":"wall","x":9,"y":10},{"spriteName":"wall","x":10,"y":10},{"spriteName":"wall","x":11,"y":9},{"spriteName":"wall","x":11,"y":8},{"spriteName":"wall","x":12,"y":8},{"spriteName":"wall","x":12,"y":9},{"spriteName":"wall","x":12,"y":1},{"spriteName":"wall","x":12,"y":0},{"spriteName":"wall","x":13,"y":0},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":14,"y":0},{"spriteName":"wall","x":14,"y":1},{"spriteName":"wall","x":13,"y":2},{"spriteName":"wall","x":12,"y":2},{"spriteName":"wall","x":14,"y":2},{"spriteName":"wall","x":11,"y":2},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":10,"y":6},{"spriteName":"wall","x":10,"y":7},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":12,"y":5},{"spriteName":"wall","x":12,"y":6},{"spriteName":"wall","x":11,"y":7},{"spriteName":"wall","x":12,"y":4},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":11,"y":5},{"spriteName":"wall","x":10,"y":4},{"spriteName":"wall","x":9,"y":4},{"spriteName":"wall","x":8,"y":3},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":0,"y":0},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":6,"y":1},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":6,"y":0},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":15,"y":5}],"scriptList":{"on-enter":"Room 5-2","on-exit":""}},{"name":"room-1-3","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":14,"y":2},{"spriteName":"wall","x":14,"y":1},{"spriteName":"wall","x":13,"y":0},{"spriteName":"wall","x":12,"y":2},{"spriteName":"wall","x":11,"y":2},{"spriteName":"wall","x":10,"y":1},{"spriteName":"wall","x":10,"y":0},{"spriteName":"wall","x":9,"y":0},{"spriteName":"wall","x":8,"y":0},{"spriteName":"wall","x":8,"y":1},{"spriteName":"wall","x":8,"y":2},{"spriteName":"wall","x":9,"y":1},{"spriteName":"wall","x":9,"y":2},{"spriteName":"wall","x":3,"y":14},{"spriteName":"wall","x":4,"y":14},{"spriteName":"wall","x":4,"y":13},{"spriteName":"wall","x":5,"y":14},{"spriteName":"wall","x":6,"y":14},{"spriteName":"wall","x":3,"y":12},{"spriteName":"wall","x":3,"y":11},{"spriteName":"wall","x":2,"y":11},{"spriteName":"wall","x":4,"y":10},{"spriteName":"wall","x":4,"y":11},{"spriteName":"wall","x":4,"y":12},{"spriteName":"wall","x":5,"y":11},{"spriteName":"wall","x":6,"y":10},{"spriteName":"wall","x":7,"y":9},{"spriteName":"wall","x":12,"y":1},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":13,"y":2},{"spriteName":"wall","x":15,"y":2},{"spriteName":"wall","x":15,"y":3},{"spriteName":"wall","x":15,"y":4},{"spriteName":"wall","x":14,"y":4},{"spriteName":"wall","x":12,"y":0},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":6,"y":1},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":4,"y":6},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":15,"y":11},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":15,"y":10},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":15,"y":12},{"spriteName":"floor","x":15,"y":14},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":6,"y":5},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":6,"y":7}],"scriptList":{"on-enter":"Room 1-3","on-exit":""}},{"name":"room-2-3","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":1,"y":14},{"spriteName":"wall","x":0,"y":14},{"spriteName":"wall","x":0,"y":15},{"spriteName":"wall","x":2,"y":14},{"spriteName":"wall","x":3,"y":13},{"spriteName":"wall","x":4,"y":13},{"spriteName":"wall","x":5,"y":13},{"spriteName":"wall","x":5,"y":12},{"spriteName":"wall","x":5,"y":14},{"spriteName":"wall","x":1,"y":1},{"spriteName":"wall","x":2,"y":1},{"spriteName":"wall","x":1,"y":2},{"spriteName":"wall","x":1,"y":0},{"spriteName":"wall","x":0,"y":0},{"spriteName":"wall","x":0,"y":2},{"spriteName":"wall","x":0,"y":1},{"spriteName":"wall","x":0,"y":6},{"spriteName":"wall","x":0,"y":7},{"spriteName":"wall","x":1,"y":7},{"spriteName":"wall","x":0,"y":8},{"spriteName":"wall","x":0,"y":9},{"spriteName":"wall","x":1,"y":9},{"spriteName":"wall","x":2,"y":10},{"spriteName":"wall","x":1,"y":11},{"spriteName":"wall","x":1,"y":8},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":15,"y":14},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":8,"y":8},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":7,"y":15},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":8,"y":15},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":8,"y":1}],"scriptList":{"on-enter":"Room 2-3","on-exit":""}},{"name":"room-3-3","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":9,"y":12},{"spriteName":"wall","x":8,"y":12},{"spriteName":"wall","x":7,"y":11},{"spriteName":"wall","x":8,"y":11},{"spriteName":"wall","x":7,"y":12},{"spriteName":"wall","x":7,"y":10},{"spriteName":"wall","x":8,"y":9},{"spriteName":"wall","x":8,"y":8},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":9,"y":8},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":10,"y":9},{"spriteName":"wall","x":12,"y":6},{"spriteName":"wall","x":0,"y":0},{"spriteName":"wall","x":0,"y":1},{"spriteName":"wall","x":2,"y":1},{"spriteName":"wall","x":3,"y":2},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":3},{"spriteName":"wall","x":2,"y":2},{"spriteName":"wall","x":1,"y":2},{"spriteName":"wall","x":0,"y":3},{"spriteName":"wall","x":1,"y":3},{"spriteName":"wall","x":0,"y":4},{"spriteName":"wall","x":0,"y":5},{"spriteName":"wall","x":1,"y":4},{"spriteName":"wall","x":15,"y":5},{"spriteName":"wall","x":14,"y":4},{"spriteName":"wall","x":14,"y":7},{"spriteName":"wall","x":15,"y":6},{"spriteName":"wall","x":14,"y":5},{"spriteName":"wall","x":14,"y":3},{"spriteName":"wall","x":13,"y":2},{"spriteName":"wall","x":12,"y":1},{"spriteName":"wall","x":11,"y":1},{"spriteName":"wall","x":10,"y":2},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":14,"y":2},{"spriteName":"wall","x":15,"y":1},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":11,"y":8},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":15,"y":14},{"spriteName":"floor","x":15,"y":11},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":12,"y":8},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":15,"y":10},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":8,"y":15},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":15,"y":12},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":8,"y":4},{"spriteName":"wall","x":0,"y":12}],"scriptList":{"on-enter":"Room 3-3","on-exit":""}},{"name":"room-4-3","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":5,"y":6},{"spriteName":"wall","x":4,"y":7},{"spriteName":"wall","x":3,"y":7},{"spriteName":"wall","x":2,"y":6},{"spriteName":"wall","x":1,"y":5},{"spriteName":"wall","x":1,"y":7},{"spriteName":"wall","x":3,"y":8},{"spriteName":"wall","x":4,"y":8},{"spriteName":"wall","x":4,"y":9},{"spriteName":"wall","x":2,"y":8},{"spriteName":"wall","x":1,"y":6},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":5,"y":0},{"spriteName":"wall","x":6,"y":0},{"spriteName":"wall","x":7,"y":0},{"spriteName":"wall","x":6,"y":1},{"spriteName":"wall","x":7,"y":2},{"spriteName":"wall","x":4,"y":1},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":3},{"spriteName":"wall","x":3,"y":4},{"spriteName":"wall","x":4,"y":4},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":12,"y":10},{"spriteName":"wall","x":12,"y":9},{"spriteName":"wall","x":13,"y":10},{"spriteName":"wall","x":14,"y":10},{"spriteName":"wall","x":14,"y":9},{"spriteName":"wall","x":11,"y":7},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":10,"y":7},{"spriteName":"wall","x":11,"y":8},{"spriteName":"wall","x":10,"y":9},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":9,"y":12},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":15,"y":11},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":15,"y":10},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":14,"y":6},{"spriteName":"apple","x":0,"y":6},{"spriteName":"apple","x":6,"y":5},{"spriteName":"apple","x":15,"y":15}],"scriptList":{"on-enter":"Room 4-3","on-exit":""}},{"name":"room-5-3","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":7,"y":4},{"spriteName":"wall","x":7,"y":3},{"spriteName":"wall","x":8,"y":3},{"spriteName":"wall","x":9,"y":4},{"spriteName":"wall","x":10,"y":5},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":10,"y":6},{"spriteName":"wall","x":12,"y":5},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":11,"y":2},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":12,"y":2},{"spriteName":"wall","x":11,"y":1},{"spriteName":"wall","x":10,"y":1},{"spriteName":"wall","x":9,"y":0},{"spriteName":"wall","x":10,"y":0},{"spriteName":"wall","x":12,"y":1},{"spriteName":"wall","x":13,"y":0},{"spriteName":"wall","x":12,"y":0},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":14,"y":1},{"spriteName":"wall","x":15,"y":0},{"spriteName":"wall","x":14,"y":2},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":2},{"spriteName":"wall","x":4,"y":1},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":4,"y":3},{"spriteName":"wall","x":3,"y":3},{"spriteName":"wall","x":4,"y":4},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":4,"y":5},{"spriteName":"wall","x":3,"y":5},{"spriteName":"wall","x":2,"y":5},{"spriteName":"wall","x":3,"y":6},{"spriteName":"wall","x":3,"y":7},{"spriteName":"wall","x":2,"y":7},{"spriteName":"wall","x":5,"y":6},{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":7,"y":5},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":3,"y":12},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":7,"y":15},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":10,"y":9},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":2,"y":4},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":6,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":0,"y":0},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":0,"y":2}],"scriptList":{"on-enter":"Room 5-3","on-exit":""}},{"name":"room-1-4","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":3,"y":9},{"spriteName":"wall","x":3,"y":10},{"spriteName":"wall","x":2,"y":11},{"spriteName":"wall","x":3,"y":11},{"spriteName":"wall","x":4,"y":11},{"spriteName":"wall","x":4,"y":10},{"spriteName":"wall","x":5,"y":9},{"spriteName":"wall","x":6,"y":9},{"spriteName":"wall","x":7,"y":10},{"spriteName":"wall","x":7,"y":9},{"spriteName":"wall","x":8,"y":8},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":9,"y":8},{"spriteName":"wall","x":8,"y":9},{"spriteName":"wall","x":9,"y":9},{"spriteName":"wall","x":10,"y":9},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":11,"y":8},{"spriteName":"wall","x":12,"y":7},{"spriteName":"wall","x":13,"y":6},{"spriteName":"wall","x":6,"y":0},{"spriteName":"wall","x":5,"y":0},{"spriteName":"wall","x":7,"y":0},{"spriteName":"wall","x":5,"y":1},{"spriteName":"wall","x":6,"y":2},{"spriteName":"wall","x":6,"y":1},{"spriteName":"wall","x":4,"y":0},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":3,"y":0},{"spriteName":"wall","x":2,"y":2},{"spriteName":"wall","x":8,"y":1},{"spriteName":"wall","x":8,"y":2},{"spriteName":"wall","x":7,"y":1},{"spriteName":"wall","x":8,"y":0},{"spriteName":"wall","x":7,"y":2},{"spriteName":"wall","x":7,"y":3},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":5,"y":4},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":15,"y":14},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":1,"y":9}],"scriptList":{"on-enter":"Room 1-4","on-exit":""}},{"name":"room-2-4","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":12,"y":14},{"spriteName":"wall","x":11,"y":14},{"spriteName":"wall","x":13,"y":14},{"spriteName":"wall","x":14,"y":14},{"spriteName":"wall","x":14,"y":15},{"spriteName":"wall","x":15,"y":12},{"spriteName":"wall","x":15,"y":13},{"spriteName":"wall","x":14,"y":13},{"spriteName":"wall","x":14,"y":12},{"spriteName":"wall","x":15,"y":11},{"spriteName":"wall","x":15,"y":14},{"spriteName":"wall","x":1,"y":14},{"spriteName":"wall","x":1,"y":15},{"spriteName":"wall","x":0,"y":15},{"spriteName":"wall","x":0,"y":14},{"spriteName":"wall","x":0,"y":13},{"spriteName":"wall","x":0,"y":12},{"spriteName":"wall","x":0,"y":11},{"spriteName":"wall","x":10,"y":10},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":10,"y":11},{"spriteName":"wall","x":9,"y":12},{"spriteName":"wall","x":11,"y":10},{"spriteName":"wall","x":8,"y":11},{"spriteName":"wall","x":11,"y":9},{"spriteName":"wall","x":12,"y":9},{"spriteName":"wall","x":12,"y":11},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":10,"y":12},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":8,"y":8},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":4,"y":6},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":12,"y":8},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":6,"y":15},{"spriteName":"apple","x":2,"y":15},{"spriteName":"apple","x":2,"y":11}],"scriptList":{"on-enter":"Room 2-4","on-exit":""}},{"name":"room-3-4","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":12,"y":2},{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":12,"y":4},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":13,"y":3},{"spriteName":"wall","x":14,"y":4},{"spriteName":"wall","x":15,"y":4},{"spriteName":"wall","x":15,"y":2},{"spriteName":"wall","x":14,"y":1},{"spriteName":"wall","x":13,"y":0},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":12,"y":0},{"spriteName":"wall","x":11,"y":0},{"spriteName":"wall","x":10,"y":0},{"spriteName":"wall","x":9,"y":0},{"spriteName":"wall","x":9,"y":1},{"spriteName":"wall","x":15,"y":1},{"spriteName":"wall","x":11,"y":1},{"spriteName":"wall","x":11,"y":2},{"spriteName":"wall","x":9,"y":3},{"spriteName":"wall","x":9,"y":2},{"spriteName":"wall","x":10,"y":1},{"spriteName":"wall","x":10,"y":2},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":11,"y":7},{"spriteName":"wall","x":12,"y":6},{"spriteName":"wall","x":7,"y":4},{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":5,"y":3},{"spriteName":"wall","x":6,"y":3},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":7,"y":5},{"spriteName":"wall","x":8,"y":6},{"spriteName":"wall","x":9,"y":6},{"spriteName":"wall","x":9,"y":5},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":11,"y":8},{"spriteName":"wall","x":10,"y":9},{"spriteName":"wall","x":11,"y":10},{"spriteName":"wall","x":10,"y":10},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":4,"y":6},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":3,"y":12},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":3,"y":11},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":2,"y":4},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":7,"y":15},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":15,"y":14},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":8,"y":15},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":15,"y":11},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":14,"y":7}],"scriptList":{"on-enter":"Room 3-4","on-exit":""}},{"name":"room-4-4","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":3,"y":6},{"spriteName":"wall","x":3,"y":7},{"spriteName":"wall","x":4,"y":6},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":4,"y":4},{"spriteName":"wall","x":3,"y":4},{"spriteName":"wall","x":4,"y":3},{"spriteName":"wall","x":5,"y":4},{"spriteName":"wall","x":4,"y":5},{"spriteName":"wall","x":4,"y":8},{"spriteName":"wall","x":2,"y":4},{"spriteName":"wall","x":1,"y":3},{"spriteName":"wall","x":2,"y":5},{"spriteName":"wall","x":3,"y":5},{"spriteName":"wall","x":2,"y":3},{"spriteName":"wall","x":0,"y":2},{"spriteName":"wall","x":0,"y":3},{"spriteName":"wall","x":1,"y":2},{"spriteName":"wall","x":0,"y":1},{"spriteName":"wall","x":0,"y":0},{"spriteName":"wall","x":8,"y":3},{"spriteName":"wall","x":9,"y":2},{"spriteName":"wall","x":9,"y":3},{"spriteName":"wall","x":11,"y":5},{"spriteName":"wall","x":12,"y":4},{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":10,"y":4},{"spriteName":"wall","x":10,"y":5},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":10,"y":6},{"spriteName":"wall","x":11,"y":7},{"spriteName":"wall","x":12,"y":8},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":15,"y":12},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":3,"y":12},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":7,"y":7},{"spriteName":"cyclops","x":15,"y":11},{"spriteName":"cyclops","x":14,"y":14},{"spriteName":"cyclops","x":6,"y":10},{"spriteName":"cyclops","x":11,"y":13}],"scriptList":{"on-enter":"Room 4-4","on-exit":""}},{"name":"room-5-4","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":15,"y":10},{"spriteName":"wall","x":15,"y":11},{"spriteName":"wall","x":14,"y":12},{"spriteName":"wall","x":14,"y":11},{"spriteName":"wall","x":13,"y":11},{"spriteName":"wall","x":15,"y":8},{"spriteName":"wall","x":14,"y":8},{"spriteName":"wall","x":15,"y":7},{"spriteName":"wall","x":14,"y":9},{"spriteName":"wall","x":15,"y":9},{"spriteName":"wall","x":14,"y":10},{"spriteName":"wall","x":13,"y":9},{"spriteName":"wall","x":12,"y":9},{"spriteName":"wall","x":13,"y":8},{"spriteName":"wall","x":12,"y":7},{"spriteName":"wall","x":11,"y":6},{"spriteName":"wall","x":10,"y":6},{"spriteName":"wall","x":10,"y":7},{"spriteName":"wall","x":9,"y":6},{"spriteName":"wall","x":8,"y":7},{"spriteName":"wall","x":9,"y":7},{"spriteName":"wall","x":10,"y":8},{"spriteName":"wall","x":11,"y":8},{"spriteName":"wall","x":9,"y":8},{"spriteName":"wall","x":10,"y":9},{"spriteName":"wall","x":11,"y":10},{"spriteName":"wall","x":11,"y":9},{"spriteName":"wall","x":12,"y":11},{"spriteName":"wall","x":12,"y":12},{"spriteName":"wall","x":12,"y":13},{"spriteName":"wall","x":13,"y":13},{"spriteName":"wall","x":13,"y":12},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":11,"y":12},{"spriteName":"wall","x":10,"y":13},{"spriteName":"wall","x":9,"y":13},{"spriteName":"wall","x":9,"y":12},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":6,"y":5},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":6,"y":1},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":12,"y":8},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":8,"y":4},{"spriteName":"apple","x":3,"y":8}],"scriptList":{"on-enter":"Room 5-4","on-exit":""}},{"name":"room-1-5","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":0,"y":13},{"spriteName":"wall","x":1,"y":12},{"spriteName":"wall","x":1,"y":11},{"spriteName":"wall","x":0,"y":12},{"spriteName":"wall","x":1,"y":10},{"spriteName":"wall","x":0,"y":9},{"spriteName":"wall","x":1,"y":7},{"spriteName":"wall","x":1,"y":8},{"spriteName":"wall","x":2,"y":7},{"spriteName":"wall","x":3,"y":7},{"spriteName":"wall","x":4,"y":9},{"spriteName":"wall","x":4,"y":10},{"spriteName":"wall","x":5,"y":10},{"spriteName":"wall","x":3,"y":10},{"spriteName":"wall","x":2,"y":8},{"spriteName":"wall","x":4,"y":7},{"spriteName":"wall","x":5,"y":6},{"spriteName":"wall","x":4,"y":5},{"spriteName":"wall","x":2,"y":5},{"spriteName":"wall","x":3,"y":4},{"spriteName":"wall","x":3,"y":5},{"spriteName":"wall","x":4,"y":4},{"spriteName":"wall","x":6,"y":4},{"spriteName":"wall","x":10,"y":11},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":11,"y":13},{"spriteName":"wall","x":12,"y":13},{"spriteName":"wall","x":13,"y":12},{"spriteName":"wall","x":11,"y":12},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":12,"y":11},{"spriteName":"wall","x":12,"y":10},{"spriteName":"wall","x":13,"y":11},{"spriteName":"wall","x":14,"y":9},{"spriteName":"wall","x":14,"y":8},{"spriteName":"wall","x":15,"y":8},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":11,"y":8},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":10,"y":3},{"spriteName":"wall","x":1,"y":5}],"scriptList":{"on-enter":"Room 1-5","on-exit":""}},{"name":"room-2-5","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":12,"y":4},{"spriteName":"wall","x":11,"y":5},{"spriteName":"wall","x":11,"y":4},{"spriteName":"wall","x":13,"y":4},{"spriteName":"wall","x":12,"y":5},{"spriteName":"wall","x":14,"y":4},{"spriteName":"wall","x":15,"y":5},{"spriteName":"wall","x":14,"y":5},{"spriteName":"wall","x":15,"y":2},{"spriteName":"wall","x":14,"y":3},{"spriteName":"wall","x":12,"y":3},{"spriteName":"wall","x":10,"y":3},{"spriteName":"wall","x":9,"y":2},{"spriteName":"wall","x":10,"y":12},{"spriteName":"wall","x":10,"y":13},{"spriteName":"wall","x":10,"y":14},{"spriteName":"wall","x":10,"y":15},{"spriteName":"wall","x":11,"y":15},{"spriteName":"wall","x":12,"y":15},{"spriteName":"wall","x":12,"y":14},{"spriteName":"wall","x":13,"y":14},{"spriteName":"wall","x":11,"y":14},{"spriteName":"wall","x":12,"y":13},{"spriteName":"wall","x":13,"y":11},{"spriteName":"wall","x":13,"y":12},{"spriteName":"wall","x":12,"y":12},{"spriteName":"wall","x":11,"y":13},{"spriteName":"wall","x":13,"y":13},{"spriteName":"wall","x":1,"y":0},{"spriteName":"wall","x":2,"y":0},{"spriteName":"wall","x":3,"y":1},{"spriteName":"wall","x":2,"y":2},{"spriteName":"wall","x":4,"y":1},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":3,"y":2},{"spriteName":"wall","x":2,"y":1},{"spriteName":"wall","x":1,"y":3},{"spriteName":"wall","x":2,"y":3},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":15,"y":11},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":10,"y":9},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":3,"y":5},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":15,"y":10},{"spriteName":"floor","x":15,"y":12},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":3,"y":11},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":9,"y":13}],"scriptList":{"on-enter":"Room 2-5","on-exit":""}},{"name":"room-3-5","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":15,"y":2},{"spriteName":"wall","x":14,"y":2},{"spriteName":"wall","x":14,"y":3},{"spriteName":"wall","x":14,"y":1},{"spriteName":"wall","x":15,"y":0},{"spriteName":"wall","x":14,"y":0},{"spriteName":"wall","x":13,"y":2},{"spriteName":"wall","x":13,"y":1},{"spriteName":"wall","x":15,"y":1},{"spriteName":"wall","x":13,"y":3},{"spriteName":"wall","x":13,"y":0},{"spriteName":"wall","x":12,"y":0},{"spriteName":"wall","x":12,"y":1},{"spriteName":"wall","x":11,"y":0},{"spriteName":"wall","x":3,"y":10},{"spriteName":"wall","x":3,"y":12},{"spriteName":"wall","x":2,"y":13},{"spriteName":"wall","x":3,"y":14},{"spriteName":"wall","x":1,"y":15},{"spriteName":"wall","x":0,"y":12},{"spriteName":"wall","x":0,"y":11},{"spriteName":"wall","x":0,"y":9},{"spriteName":"wall","x":0,"y":10},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":8,"y":15},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":7,"y":15},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":12,"y":5},{"spriteName":"apple","x":15,"y":14},{"spriteName":"wall","x":10,"y":8}],"scriptList":{"on-enter":"Room 3-5","on-exit":""}},{"name":"room-4-5","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"wall","x":8,"y":14},{"spriteName":"wall","x":9,"y":14},{"spriteName":"wall","x":10,"y":13},{"spriteName":"wall","x":11,"y":12},{"spriteName":"wall","x":10,"y":12},{"spriteName":"wall","x":11,"y":11},{"spriteName":"wall","x":12,"y":11},{"spriteName":"wall","x":9,"y":11},{"spriteName":"wall","x":8,"y":10},{"spriteName":"wall","x":8,"y":11},{"spriteName":"wall","x":7,"y":11},{"spriteName":"wall","x":6,"y":12},{"spriteName":"wall","x":5,"y":13},{"spriteName":"wall","x":6,"y":13},{"spriteName":"wall","x":7,"y":13},{"spriteName":"wall","x":7,"y":14},{"spriteName":"wall","x":6,"y":14},{"spriteName":"wall","x":9,"y":6},{"spriteName":"wall","x":8,"y":7},{"spriteName":"wall","x":6,"y":9},{"spriteName":"wall","x":5,"y":10},{"spriteName":"wall","x":6,"y":10},{"spriteName":"wall","x":7,"y":9},{"spriteName":"wall","x":6,"y":8},{"spriteName":"wall","x":5,"y":6},{"spriteName":"wall","x":5,"y":5},{"spriteName":"wall","x":6,"y":5},{"spriteName":"wall","x":3,"y":2},{"spriteName":"wall","x":4,"y":2},{"spriteName":"wall","x":5,"y":0},{"spriteName":"wall","x":6,"y":0},{"spriteName":"wall","x":7,"y":1},{"spriteName":"wall","x":8,"y":2},{"spriteName":"wall","x":9,"y":2},{"spriteName":"wall","x":10,"y":2},{"spriteName":"wall","x":11,"y":3},{"spriteName":"wall","x":12,"y":5},{"spriteName":"wall","x":10,"y":5},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":2,"y":4},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":2,"y":2},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":3,"y":11},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":13,"y":2},{"spriteName":"cyclops","x":3,"y":10}],"scriptList":{"on-enter":"Room 4-5","on-exit":""}},{"name":"room-5-5","paletteName":"palette-1","musicName":"song-1","tileList":[{"spriteName":"floor","x":10,"y":9},{"spriteName":"floor","x":10,"y":11},{"spriteName":"floor","x":10,"y":10},{"spriteName":"floor","x":10,"y":8},{"spriteName":"floor","x":12,"y":10},{"spriteName":"floor","x":14,"y":10},{"spriteName":"floor","x":15,"y":9},{"spriteName":"floor","x":14,"y":8},{"spriteName":"floor","x":13,"y":9},{"spriteName":"floor","x":15,"y":10},{"spriteName":"floor","x":14,"y":9},{"spriteName":"floor","x":13,"y":10},{"spriteName":"floor","x":12,"y":9},{"spriteName":"floor","x":13,"y":8},{"spriteName":"floor","x":14,"y":7},{"spriteName":"floor","x":12,"y":7},{"spriteName":"floor","x":11,"y":8},{"spriteName":"floor","x":11,"y":6},{"spriteName":"floor","x":10,"y":6},{"spriteName":"floor","x":11,"y":11},{"spriteName":"floor","x":12,"y":13},{"spriteName":"floor","x":12,"y":12},{"spriteName":"floor","x":11,"y":12},{"spriteName":"floor","x":9,"y":13},{"spriteName":"floor","x":9,"y":11},{"spriteName":"floor","x":8,"y":12},{"spriteName":"floor","x":5,"y":11},{"spriteName":"floor","x":8,"y":13},{"spriteName":"floor","x":8,"y":14},{"spriteName":"floor","x":10,"y":13},{"spriteName":"floor","x":10,"y":14},{"spriteName":"floor","x":7,"y":12},{"spriteName":"floor","x":5,"y":10},{"spriteName":"floor","x":4,"y":11},{"spriteName":"floor","x":4,"y":12},{"spriteName":"floor","x":4,"y":9},{"spriteName":"floor","x":6,"y":9},{"spriteName":"floor","x":8,"y":11},{"spriteName":"floor","x":12,"y":11},{"spriteName":"floor","x":10,"y":12},{"spriteName":"floor","x":9,"y":12},{"spriteName":"floor","x":8,"y":15},{"spriteName":"floor","x":7,"y":15},{"spriteName":"floor","x":6,"y":15},{"spriteName":"floor","x":5,"y":14},{"spriteName":"floor","x":6,"y":13},{"spriteName":"floor","x":5,"y":12},{"spriteName":"floor","x":4,"y":13},{"spriteName":"floor","x":4,"y":14},{"spriteName":"floor","x":3,"y":15},{"spriteName":"floor","x":2,"y":15},{"spriteName":"floor","x":1,"y":13},{"spriteName":"floor","x":2,"y":13},{"spriteName":"floor","x":2,"y":14},{"spriteName":"floor","x":3,"y":13},{"spriteName":"floor","x":1,"y":14},{"spriteName":"floor","x":0,"y":15},{"spriteName":"floor","x":0,"y":13},{"spriteName":"floor","x":1,"y":12},{"spriteName":"floor","x":2,"y":12},{"spriteName":"floor","x":3,"y":11},{"spriteName":"floor","x":1,"y":10},{"spriteName":"floor","x":10,"y":5},{"spriteName":"floor","x":12,"y":3},{"spriteName":"floor","x":6,"y":8},{"spriteName":"floor","x":5,"y":9},{"spriteName":"floor","x":11,"y":14},{"spriteName":"floor","x":13,"y":13},{"spriteName":"floor","x":11,"y":15},{"spriteName":"floor","x":15,"y":11},{"spriteName":"floor","x":15,"y":12},{"spriteName":"floor","x":14,"y":13},{"spriteName":"floor","x":15,"y":13},{"spriteName":"floor","x":11,"y":10},{"spriteName":"floor","x":13,"y":15},{"spriteName":"floor","x":13,"y":14},{"spriteName":"floor","x":10,"y":7},{"spriteName":"floor","x":11,"y":9},{"spriteName":"floor","x":0,"y":10},{"spriteName":"floor","x":1,"y":9},{"spriteName":"floor","x":3,"y":8},{"spriteName":"floor","x":2,"y":10},{"spriteName":"floor","x":1,"y":11},{"spriteName":"floor","x":0,"y":12},{"spriteName":"floor","x":0,"y":14},{"spriteName":"floor","x":3,"y":14},{"spriteName":"floor","x":0,"y":9},{"spriteName":"floor","x":1,"y":8},{"spriteName":"floor","x":3,"y":5},{"spriteName":"floor","x":3,"y":6},{"spriteName":"floor","x":5,"y":6},{"spriteName":"floor","x":7,"y":5},{"spriteName":"floor","x":3,"y":3},{"spriteName":"floor","x":3,"y":7},{"spriteName":"floor","x":1,"y":7},{"spriteName":"floor","x":0,"y":8},{"spriteName":"floor","x":1,"y":15},{"spriteName":"floor","x":4,"y":15},{"spriteName":"floor","x":5,"y":15},{"spriteName":"floor","x":9,"y":15},{"spriteName":"floor","x":10,"y":15},{"spriteName":"floor","x":12,"y":15},{"spriteName":"floor","x":14,"y":15},{"spriteName":"floor","x":15,"y":15},{"spriteName":"floor","x":15,"y":14},{"spriteName":"floor","x":14,"y":14},{"spriteName":"floor","x":12,"y":14},{"spriteName":"floor","x":9,"y":14},{"spriteName":"floor","x":7,"y":14},{"spriteName":"floor","x":6,"y":14},{"spriteName":"floor","x":0,"y":11},{"spriteName":"floor","x":2,"y":11},{"spriteName":"floor","x":5,"y":13},{"spriteName":"floor","x":3,"y":12},{"spriteName":"floor","x":7,"y":13},{"spriteName":"floor","x":11,"y":13},{"spriteName":"floor","x":13,"y":12},{"spriteName":"floor","x":14,"y":11},{"spriteName":"floor","x":13,"y":11},{"spriteName":"floor","x":14,"y":12},{"spriteName":"floor","x":6,"y":12},{"spriteName":"floor","x":6,"y":11},{"spriteName":"floor","x":7,"y":11},{"spriteName":"floor","x":6,"y":10},{"spriteName":"floor","x":7,"y":10},{"spriteName":"floor","x":8,"y":10},{"spriteName":"floor","x":9,"y":10},{"spriteName":"floor","x":9,"y":9},{"spriteName":"floor","x":7,"y":9},{"spriteName":"floor","x":8,"y":9},{"spriteName":"floor","x":4,"y":10},{"spriteName":"floor","x":3,"y":10},{"spriteName":"floor","x":3,"y":9},{"spriteName":"floor","x":4,"y":7},{"spriteName":"floor","x":4,"y":8},{"spriteName":"floor","x":5,"y":8},{"spriteName":"floor","x":5,"y":7},{"spriteName":"floor","x":6,"y":7},{"spriteName":"floor","x":7,"y":8},{"spriteName":"floor","x":9,"y":8},{"spriteName":"floor","x":9,"y":7},{"spriteName":"floor","x":7,"y":7},{"spriteName":"floor","x":8,"y":7},{"spriteName":"floor","x":8,"y":8},{"spriteName":"floor","x":11,"y":7},{"spriteName":"floor","x":12,"y":8},{"spriteName":"floor","x":13,"y":6},{"spriteName":"floor","x":13,"y":7},{"spriteName":"floor","x":15,"y":8},{"spriteName":"floor","x":15,"y":7},{"spriteName":"floor","x":15,"y":6},{"spriteName":"floor","x":15,"y":5},{"spriteName":"floor","x":15,"y":4},{"spriteName":"floor","x":15,"y":3},{"spriteName":"floor","x":15,"y":2},{"spriteName":"floor","x":15,"y":1},{"spriteName":"floor","x":15,"y":0},{"spriteName":"floor","x":14,"y":0},{"spriteName":"floor","x":13,"y":1},{"spriteName":"floor","x":12,"y":1},{"spriteName":"floor","x":11,"y":1},{"spriteName":"floor","x":11,"y":0},{"spriteName":"floor","x":12,"y":0},{"spriteName":"floor","x":13,"y":0},{"spriteName":"floor","x":14,"y":1},{"spriteName":"floor","x":14,"y":2},{"spriteName":"floor","x":13,"y":2},{"spriteName":"floor","x":13,"y":3},{"spriteName":"floor","x":13,"y":4},{"spriteName":"floor","x":13,"y":5},{"spriteName":"floor","x":14,"y":5},{"spriteName":"floor","x":14,"y":6},{"spriteName":"floor","x":14,"y":4},{"spriteName":"floor","x":14,"y":3},{"spriteName":"floor","x":12,"y":4},{"spriteName":"floor","x":12,"y":5},{"spriteName":"floor","x":12,"y":6},{"spriteName":"floor","x":12,"y":2},{"spriteName":"floor","x":11,"y":2},{"spriteName":"floor","x":11,"y":3},{"spriteName":"floor","x":11,"y":4},{"spriteName":"floor","x":11,"y":5},{"spriteName":"floor","x":10,"y":4},{"spriteName":"floor","x":10,"y":3},{"spriteName":"floor","x":10,"y":2},{"spriteName":"floor","x":10,"y":1},{"spriteName":"floor","x":10,"y":0},{"spriteName":"floor","x":9,"y":0},{"spriteName":"floor","x":9,"y":2},{"spriteName":"floor","x":9,"y":3},{"spriteName":"floor","x":9,"y":4},{"spriteName":"floor","x":9,"y":5},{"spriteName":"floor","x":9,"y":6},{"spriteName":"floor","x":9,"y":1},{"spriteName":"floor","x":8,"y":5},{"spriteName":"floor","x":6,"y":5},{"spriteName":"floor","x":6,"y":6},{"spriteName":"floor","x":7,"y":6},{"spriteName":"floor","x":8,"y":6},{"spriteName":"floor","x":4,"y":6},{"spriteName":"floor","x":4,"y":5},{"spriteName":"floor","x":5,"y":5},{"spriteName":"floor","x":8,"y":4},{"spriteName":"floor","x":8,"y":3},{"spriteName":"floor","x":8,"y":2},{"spriteName":"floor","x":8,"y":1},{"spriteName":"floor","x":8,"y":0},{"spriteName":"floor","x":7,"y":0},{"spriteName":"floor","x":6,"y":0},{"spriteName":"floor","x":7,"y":1},{"spriteName":"floor","x":7,"y":2},{"spriteName":"floor","x":7,"y":3},{"spriteName":"floor","x":7,"y":4},{"spriteName":"floor","x":6,"y":4},{"spriteName":"floor","x":6,"y":3},{"spriteName":"floor","x":6,"y":2},{"spriteName":"floor","x":6,"y":1},{"spriteName":"floor","x":5,"y":1},{"spriteName":"floor","x":3,"y":2},{"spriteName":"floor","x":5,"y":3},{"spriteName":"floor","x":5,"y":4},{"spriteName":"floor","x":4,"y":4},{"spriteName":"floor","x":2,"y":7},{"spriteName":"floor","x":2,"y":6},{"spriteName":"floor","x":2,"y":5},{"spriteName":"floor","x":2,"y":9},{"spriteName":"floor","x":2,"y":8},{"spriteName":"floor","x":0,"y":7},{"spriteName":"floor","x":0,"y":5},{"spriteName":"floor","x":0,"y":6},{"spriteName":"floor","x":1,"y":6},{"spriteName":"floor","x":1,"y":5},{"spriteName":"floor","x":1,"y":4},{"spriteName":"floor","x":0,"y":4},{"spriteName":"floor","x":2,"y":4},{"spriteName":"floor","x":3,"y":4},{"spriteName":"floor","x":4,"y":3},{"spriteName":"floor","x":2,"y":3},{"spriteName":"floor","x":1,"y":3},{"spriteName":"floor","x":0,"y":3},{"spriteName":"floor","x":0,"y":2},{"spriteName":"floor","x":0,"y":1},{"spriteName":"floor","x":0,"y":0},{"spriteName":"floor","x":1,"y":0},{"spriteName":"floor","x":2,"y":0},{"spriteName":"floor","x":3,"y":0},{"spriteName":"floor","x":4,"y":0},{"spriteName":"floor","x":5,"y":0},{"spriteName":"floor","x":5,"y":2},{"spriteName":"floor","x":4,"y":2},{"spriteName":"floor","x":4,"y":1},{"spriteName":"floor","x":3,"y":1},{"spriteName":"floor","x":2,"y":1},{"spriteName":"floor","x":1,"y":1},{"spriteName":"floor","x":1,"y":2},{"spriteName":"floor","x":2,"y":2}],"scriptList":{"on-enter":"Room 5-5","on-exit":""}}],"roomWidth":16,"roomHeight":16,"worldWidth":5,"worldHeight":5,"worldName":"Cave Dungeon","worldWrapHorizontal":false,"worldWrapVertical":false,"worldScriptList":{"on-start":"{position fullscreen}{world-name}{/position}{position [dialog-position]}{/position}{position [dialog-position]}{/position}{Ur Mom}{sprite-x}"},"currentPaletteIndex":0,"paletteList":[{"name":"palette-1","colorList":["#121a30","#8094f6"]}],"currentMusicIndex":0,"musicList":[{"name":"song-1","beat":0.5,"voiceList":[{"instrument":{"wave":"sine","attack":0,"decay":0.5,"sustain":0,"release":0},"noteList":[466.16,null,698.46,932.33,466.16,349.23,523.25,null,261.63,932.33,466.16,261.63,523.25,783.99,349.23,698.46]},{"instrument":{"wave":"triangle","attack":0,"decay":0.5,"sustain":0.1,"release":0.1},"noteList":[null,932.33,392,null,311.13,null,null,311.13,392,466.16,392,349.23,null,null,null,null]},{"instrument":{"wave":"triangle","attack":0,"decay":0.5,"sustain":0.5,"release":0.3},"noteList":[261.63,233.08,261.63,174.61,196,null,311.13,261.63,261.63,null,null,233.08,261.63,466.16,261.63,311.13]},{"instrument":{"wave":"square","attack":0,"decay":0.2,"sustain":0,"release":0,"volume":0.5},"noteList":[116.54,98,null,116.54,null,87.31,null,98,null,174.61,null,116.54,98,77.78,null,174.61]}]}],"fontResolution":1,"fontDirection":"ltr","fontData":{"name":"ascii_tiny","width":4,"height":5,"characterList":{"32":{"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"33":{"data":[1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]},"34":{"data":[1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]},"35":{"data":[1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,0]},"36":{"data":[0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,0,0,0,0,0]},"37":{"data":[1,0,1,0,0,1,1,0,1,1,0,0,1,0,1,0,0,0,0,0]},"38":{"data":[0,1,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0]},"39":{"data":[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"40":{"data":[0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0]},"41":{"data":[0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0]},"42":{"data":[1,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0]},"43":{"data":[0,1,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0]},"44":{"data":[0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0]},"45":{"data":[0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0]},"46":{"data":[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]},"47":{"data":[0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0]},"48":{"data":[0,1,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0]},"49":{"data":[0,1,0,0,1,1,0,0,0,1,0,0,1,1,1,0,0,0,0,0]},"50":{"data":[1,1,0,0,0,0,1,0,1,1,0,0,1,1,1,0,0,0,0,0]},"51":{"data":[1,1,1,0,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,0]},"52":{"data":[1,0,1,0,1,0,1,0,1,1,1,0,0,0,1,0,0,0,0,0]},"53":{"data":[1,1,1,0,1,1,0,0,0,0,1,0,1,1,0,0,0,0,0,0]},"54":{"data":[1,1,1,0,1,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0]},"55":{"data":[1,1,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0]},"56":{"data":[1,1,1,0,1,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"57":{"data":[1,1,1,0,1,0,1,0,1,1,1,0,0,0,1,0,0,0,0,0]},"58":{"data":[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]},"59":{"data":[0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0]},"60":{"data":[0,0,1,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0]},"61":{"data":[1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0]},"62":{"data":[1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0]},"63":{"data":[1,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0]},"64":{"data":[0,1,0,0,1,1,1,0,1,0,1,0,0,1,0,0,0,0,0,0]},"65":{"data":[0,1,0,0,1,0,1,0,1,1,1,0,1,0,1,0,0,0,0,0]},"66":{"data":[1,1,0,0,1,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"67":{"data":[0,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0]},"68":{"data":[1,1,0,0,1,0,1,0,1,0,1,0,1,1,0,0,0,0,0,0]},"69":{"data":[1,1,1,0,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0]},"70":{"data":[1,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0]},"71":{"data":[1,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,0,0,0,0]},"72":{"data":[1,0,1,0,1,0,1,0,1,1,1,0,1,0,1,0,0,0,0,0]},"73":{"data":[1,1,1,0,0,1,0,0,0,1,0,0,1,1,1,0,0,0,0,0]},"74":{"data":[1,1,1,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0]},"75":{"data":[1,0,1,0,1,1,0,0,1,1,0,0,1,0,1,0,0,0,0,0]},"76":{"data":[1,0,0,0,1,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0]},"77":{"data":[1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0]},"78":{"data":[1,1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0]},"79":{"data":[1,1,1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"80":{"data":[1,1,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,0,0,0]},"81":{"data":[1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0]},"82":{"data":[1,1,0,0,1,0,1,0,1,1,0,0,1,0,1,0,0,0,0,0]},"83":{"data":[1,1,1,0,1,1,0,0,0,1,1,0,1,1,1,0,0,0,0,0]},"84":{"data":[1,1,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0]},"85":{"data":[1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"86":{"data":[1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0]},"87":{"data":[1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,0,0,0,0,0]},"88":{"data":[1,0,1,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,0,0]},"89":{"data":[1,0,1,0,1,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0]},"90":{"data":[1,1,1,0,0,1,1,0,1,1,0,0,1,1,1,0,0,0,0,0]},"91":{"data":[0,1,1,0,0,1,0,0,0,1,0,0,0,1,1,0,0,0,0,0]},"92":{"data":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0]},"93":{"data":[0,1,1,0,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0]},"94":{"data":[0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]},"95":{"data":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0]},"96":{"data":[1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"97":{"data":[0,1,0,0,1,0,1,0,1,1,1,0,1,0,1,0,0,0,0,0]},"98":{"data":[1,1,0,0,1,1,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"99":{"data":[0,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0]},"100":{"data":[1,1,0,0,1,0,1,0,1,0,1,0,1,1,0,0,0,0,0,0]},"101":{"data":[1,1,1,0,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0]},"102":{"data":[1,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0]},"103":{"data":[1,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,0,0,0,0]},"104":{"data":[1,0,1,0,1,0,1,0,1,1,1,0,1,0,1,0,0,0,0,0]},"105":{"data":[1,1,1,0,0,1,0,0,0,1,0,0,1,1,1,0,0,0,0,0]},"106":{"data":[1,1,1,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0]},"107":{"data":[1,0,1,0,1,1,0,0,1,1,0,0,1,0,1,0,0,0,0,0]},"108":{"data":[1,0,0,0,1,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0]},"109":{"data":[1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0]},"110":{"data":[1,1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0]},"111":{"data":[1,1,1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"112":{"data":[1,1,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,0,0,0]},"113":{"data":[1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0]},"114":{"data":[1,1,0,0,1,0,1,0,1,1,0,0,1,0,1,0,0,0,0,0]},"115":{"data":[1,1,1,0,1,1,0,0,0,1,1,0,1,1,1,0,0,0,0,0]},"116":{"data":[1,1,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0]},"117":{"data":[1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0,0,0]},"118":{"data":[1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0]},"119":{"data":[1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,0,0,0,0,0]},"120":{"data":[1,0,1,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,0,0]},"121":{"data":[1,0,1,0,1,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0]},"122":{"data":[1,1,1,0,0,1,1,0,1,1,0,0,1,1,1,0,0,0,0,0]},"123":{"data":[0,0,1,0,0,1,1,0,0,1,1,0,0,0,1,0,0,0,0,0]},"124":{"data":[0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0]},"125":{"data":[0,1,0,0,0,1,1,0,0,1,1,0,0,1,0,0,0,0,0,0]},"126":{"data":[0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}}}
+</script>
+
+<script>
+let Text = (() => {
+
+return {
+
+    nodesToPages: (dialogNodes, fontData, pageWidth, linesPerPage) => {
+        let lastPosition
+
+        // break individual nodes up based on line breaks
+        let newNodes = []
+        dialogNodes.forEach(node => {
+            if (node.type === 'text') {
+                // if new position is defined, create a new page
+                if (!lastPosition) lastPosition = node.position
+                if (node.position !== lastPosition) {
+                    newNodes.push({ type: 'page-break' })
+                }
+
+                // break by newlines
+                let lines = node.text.split('\n')
+
+                // break long lines up into smaller lines
+                let allLines = []
+                lines.forEach(line => {
+                    let subLines = Text.breakIntoLines(fontData, line, pageWidth)
+                    subLines.forEach(subLine => allLines.push(subLine))
+                })
+
+                // add nodes for lines and line breaks
+                allLines.forEach((line, i) => {
+                    if (i > 0 && i <= allLines.length - 1) {
+                        newNodes.push({ type: 'line-break' })
+                    }
+                    newNodes.push({ ...node, text: line })
+                })
+            } else {
+                newNodes.push(node)
+            }
+        })
+
+        let pageList = []
+        let lineList = []
+        let nodesOnLine = []
+        let spacingSoFar = 0
+
+        newNodes.forEach(node => {
+            if (node.type === 'page-break') {
+                if (nodesOnLine.length) lineList.push(nodesOnLine)
+                if (lineList.length) pageList.push(lineList)
+                lineList = []
+                nodesOnLine = []
+                spacingSoFar = 0
+            }
+            else if (node.type === 'line-break') {
+                if (nodesOnLine.length) lineList.push(nodesOnLine)
+                if (lineList.length >= linesPerPage) {
+                    if (lineList.length) pageList.push(lineList)
+                    lineList = []
+                }
+                nodesOnLine = []
+                spacingSoFar = 0
+            }
+            else {
+                let nodeWidth = Text.textWidth(fontData, node.text)
+                if (spacingSoFar + nodeWidth > pageWidth) {
+                    if (nodesOnLine.length) lineList.push(nodesOnLine)
+                    if (lineList.length >= linesPerPage) {
+                        if (lineList.length) pageList.push(lineList)
+                        lineList = []
+                    }
+                    nodesOnLine = [node]
+                    spacingSoFar = nodeWidth
+                } else {
+                    nodesOnLine.push(node)
+                    spacingSoFar += nodeWidth
+                }
+            }
+        })
+
+        if (nodesOnLine.length) lineList.push(nodesOnLine)
+        if (lineList.length) pageList.push(lineList)
+
+        return pageList
+    },
+
+    breakIntoLines: (fontData, text, pageWidth) => {
+        let lines = []
+
+        let words = text.split(' ')
+        let wordsOnLine = []
+        let spacingSoFar = 0
+        let spaceWidth = fontData.width
+
+        words.forEach(word => {
+            let wordWidth = Text.textWidth(fontData, word)
+            if (spacingSoFar + spaceWidth + wordWidth > pageWidth) {
+                lines.push(wordsOnLine.join(' '))
+                wordsOnLine = [word]
+                spacingSoFar = wordWidth
+            } else {
+                wordsOnLine.push(word)
+                spacingSoFar += spaceWidth + wordWidth
+            }
+        })
+
+        if (wordsOnLine.length) lines.push(wordsOnLine.join(' '))
+
+        return lines
+    },
+
+    textWidth: (fontData, text) => {
+        let { width, characterList } = fontData
+        let textWidth = 0
+        for (let i = 0; i < text.length; i++) {
+            let charCode = text.charCodeAt(i)
+            let charData = characterList[charCode]
+            if (!charData) continue
+            let charWidth = !isNaN(charData.width) ? charData.width : width
+            textWidth += charWidth
+        }
+        return textWidth
+    },
+
+    drawPage: (context, fontData, fontDirection, lineList, timestamp, maxChars) => {
+        let lineHeight = Math.floor(fontData.height * 2)
+        let position = lineList[0][0].position
+
+        // draw background
+        let bgWidth = context.canvas.width - (fontData.width * 2)
+        let bgHeight = Math.floor(fontData.height * 7)
+        let bgX = fontData.width
+        let bgY
+        if (position === 'top') {
+            bgY = fontData.width
+        } else if (position === 'center' || position === 'fullscreen') {
+            bgY = Math.floor(context.canvas.height / 2 - bgHeight / 2)
+        } else {
+            bgY = context.canvas.height - bgHeight - fontData.width
+        }
+
+        if (position === 'fullscreen') {
+            context.fillStyle = 'black'
+            context.fillRect(0, 0, context.canvas.width, context.canvas.height)
+        } else {
+            context.fillStyle = 'black'
+            context.fillRect(bgX, bgY, bgWidth, bgHeight)
+        }
+
+        let x = bgX + fontData.width * 2
+        let y = bgY + fontData.height * 2
+
+        let numChars = 0
+        let currentMaxChars = maxChars
+
+        // draw each line
+        lineList.forEach((nodeList, lineIndex) => {
+
+            let charIndex = 0
+            let spacingSoFar = 0
+
+            nodeList.forEach(node => {
+                let nodeText = maxChars >= 0 ? node.text.slice(0, currentMaxChars) : node.text
+                numChars += node.text.length
+
+                let seqWidth = Text.drawSeq(
+                    context,
+                    fontData,
+                    fontDirection,
+                    nodeText,
+                    node.color,
+                    node.style,
+                    x + spacingSoFar,
+                    y + (lineIndex * lineHeight),
+                    timestamp,
+                    charIndex
+                )
+
+                if (maxChars) currentMaxChars -= nodeText.length
+                charIndex += nodeText.length
+                spacingSoFar += seqWidth
+            })
+        })
+
+        // draw 'next page' indicator
+        let indicatorWidth = fontData.width
+        let indicatorHeight = fontData.width
+        let indicatorX = bgX + bgWidth - fontData.width - indicatorWidth
+        let indicatorY = bgY + bgHeight - fontData.height - indicatorHeight
+        context.fillStyle = 'white'
+        context.fillRect(indicatorX, indicatorY, indicatorWidth, indicatorHeight)
+
+        // return true if all characters were drawn
+        let allCharsDrawn = numChars <= maxChars
+        return allCharsDrawn
+    },
+
+    drawSeq: (context, fontData, fontDirection, text, color, style, x, y, timestamp, i = 0) => {
+        context.fillStyle = color
+
+        let numChars = text.length
+        let spacingSoFar = 0
+
+        for (let j = 0; j < numChars; j++) {
+            let charCode = text.charCodeAt(j)
+            let xOffset = (fontDirection === 'rtl') ? x - spacingSoFar : x + spacingSoFar
+            let newSpacing = Text.drawChar(context, fontData, charCode, xOffset, y, style, timestamp, i + j)
+            spacingSoFar += newSpacing
+        }
+
+        return spacingSoFar
+    },
+
+    drawChar: (context, fontData, charCode, x, y, style, timestamp, i) => {
+        let { width, height, characterList } = fontData
+
+        let charData = characterList[charCode]
+        if (!charData) return 0
+
+        if (!isNaN(charData.width)) width = charData.width
+        if (!isNaN(charData.height)) height = charData.height
+
+        let offsetX = 0
+        let offsetY = 0
+        if (!isNaN(charData.offsetX)) offsetX = charData.offsetX
+        if (!isNaN(charData.offsetY)) offsetY = charData.offsetY
+
+        let spacing = width
+        if (!isNaN(charData.spacing)) spacing = charData.spacing
+
+        let styleX = 0
+        let styleY = 0
+        if (style === 'wavy') {
+            styleY = Math.floor(Math.sin(timestamp / (300) + (i / 2)) * (height / 3))
+        }
+        else if (style === 'shaky') {
+            styleX = Math.floor(Math.cos(timestamp / (20) + i) * (width / 10))
+            styleY = Math.floor(Math.sin(timestamp / (10) + i) * (height / 10))
+        }
+
+        for (let cx = 0; cx < width; cx++) {
+            for (let cy = 0; cy < height; cy++) {
+                let pixel = charData.data[cy * width + cx]
+                if (pixel) {
+                    context.fillRect(x + cx + offsetX + styleX, y + cy + offsetY + styleY, 1, 1)
+                }
+            }
+        }
+
+        return spacing
+    }
+
+}
+
+})()
+</script>
+
+<script>
+let MusicPlayer = (() => {
+
+return {
+    audioContext: null,
+
+    audioLoop: null,
+
+    init: () => {
+        let AudioContext = window.AudioContext || window.webkitAudioContext
+        MusicPlayer.audioContext = new AudioContext()
+    },
+
+    playNote: (freq, { wave = 'triangle', attack = 0, decay = 0.5, sustain = 0, release = 0, volume = 1 }, beat = 1) => {
+        if (!freq) return
+        if (!MusicPlayer.audioContext) MusicPlayer.init()
+
+        let t = MusicPlayer.audioContext.currentTime
+    
+        let osc = MusicPlayer.audioContext.createOscillator()
+        osc.type = wave
+        osc.frequency.value = freq
+    
+        let env = MusicPlayer.audioContext.createGain()
+        env.connect(MusicPlayer.audioContext.destination)
+        env.gain.cancelScheduledValues(t)
+        env.gain.setValueAtTime(0, t)
+    
+        env.gain.linearRampToValueAtTime(volume, t + (attack * beat))
+        env.gain.linearRampToValueAtTime(sustain * volume, t + (attack * beat) + (decay * beat))
+        env.gain.linearRampToValueAtTime(sustain * volume, t + beat)
+        env.gain.linearRampToValueAtTime(0, t + beat + (release * beat))
+    
+        osc.connect(env)
+        osc.start()
+        osc.stop(t + beat + (release * beat))
+    },
+
+    playSong: ({ beat, voiceList }, beatFunction) => {
+        let noteIndex = 0
+        let noteCount = voiceList[0] && voiceList[0].noteList ? voiceList[0].noteList.length : 0
+        MusicPlayer.audioLoop = window.setInterval(() => {
+            if (window.muteMusic) return
+            voiceList.forEach(({ instrument, noteList }) => {
+                let freq = noteList[noteIndex]
+                if (freq) {
+                    MusicPlayer.playNote(freq, instrument, beat)
+                }
+            })
+            if (beatFunction) beatFunction(noteIndex)
+            noteIndex++
+            if (noteIndex >= noteCount) noteIndex = 0
+        }, beat * 1000)
+    },
+
+    stopSong: () => {
+        window.clearInterval(MusicPlayer.audioLoop)
+    }
+}
+
+})()
+</script>
+
+<script>
+let Script = (() => {
+
+return {
+    run: (script, game, context) => {
+        let parsedScript = Script.parse(script)
+
+        let dialogNodes = []
+
+        // default text settings
+        let defaultTextPosition = game.avatarY < game.world.roomHeight / 2 ? 'bottom' : 'top'
+        let defaultTextSettings = {
+            color: 'white',
+            style: 'normal',
+            position: defaultTextPosition
+        }
+
+        // some helper functions
+        let isStr = x => typeof x === 'string'
+        let isInt = x => !isNaN(x) && parseInt(x) === parseFloat(x)
+        let isArr = x => Array.isArray(x)
+
+        // add a chunk of formatted dialog
+        let addDialogNode = (text = '', { color, style, position }) => {
+            text = text.toString().replace(/^\n+/g, '').replace(/\n+$/g, '')
+            if (!text) return
+            let lastNode = dialogNodes[dialogNodes.length - 1]
+            if (lastNode && lastNode.color === color && lastNode.style === style && lastNode.position === position) {
+                lastNode.text += text
+            } else {
+                let currentPalette = game.world.paletteList[game.currentPaletteIndex]
+                let colorCode = currentPalette.colorList[color] || 'white'
+                dialogNodes.push({
+                    type: 'text',
+                    color: colorCode,
+                    text, style, position
+                })
+            }
+        }
+
+        let calcExpression = (node) => {
+            if (node.func) {
+                let { func, args = [] } = node
+
+                args = args.map(arg => calcExpression(arg))
+
+                if (func === 'world-name') {
+                    return game.world.worldName
+                }
+
+                else if (func === 'room-name' || func === 'avatar-room') {
+                    return game.currentRoom.name
+                }
+
+                else if (func === 'avatar-x') {
+                    return game.avatarX
+                }
+
+                else if (func === 'avatar-y') {
+                    return game.avatarY
+                }
+
+                else if (func === 'avatar-name') {
+                    return game.avatar.name
+                }
+
+                else if (func === 'sprite-room' && context) {
+                    let room = game.world.roomList[context.roomIndex]
+                    return room.name
+                }
+
+                else if (func === 'sprite-x' && context) {
+                    return context.tile.x
+                }
+
+                else if (func === 'sprite-y' && context) {
+                    return context.tile.y
+                }
+
+                else if (func === 'sprite-name' && context) {
+                    return context.sprite.name
+                }
+
+                else if (func === 'sprite-wall' && context) {
+                    return context.sprite.isWall
+                }
+
+                else if (func === 'sprite-item' && context) {
+                    return context.sprite.isItem
+                }
+
+                else if (func === 'add') {
+                    return args.reduce((prev, curr) => {
+                        if (isInt(curr)) return prev + curr
+                        else return prev
+                    }, 0)
+                }
+
+                else if (func === 'sub') {
+                    if (!isInt(args[0])) return 0
+                    return args.slice(1).reduce((prev, curr) => {
+                        if (isInt(curr)) return prev - curr
+                        else return prev
+                    }, args[0])
+                }
+
+                else if (func === 'mul') {
+                    return args.reduce((prev, curr) => {
+                        if (isInt(curr)) return prev * curr
+                        else return prev
+                    }, 1)
+                }
+
+                else if (func === 'div') {
+                    let result = Math.floor(args[0] / args[1])
+                    if (!isInt(result)) return 0
+                    return result
+                }
+
+                else if (func === 'mod') {
+                    let result = args[0] % args[1]
+                    if (!isInt(result)) return 0
+                    return 0
+                }
+
+                else if (func === 'random') {
+                    let min = isInt(args[0]) ? args[0] : 0
+                    let max = isInt(args[1]) ? args[1] : 1
+                    if (min > max) max = min
+                    return Math.floor(Math.random() * (max - min + 1)) + min
+                }
+
+                else if (func === 'eq') {
+                    return args[0] === args[1]
+                }
+
+                else if (func === 'gt') {
+                    if (!isInt(args[0]) || !isInt(args[1])) return false
+                    return args[0] > args[1]
+                }
+
+                else if (func === 'gte') {
+                    if (!isInt(args[0]) || !isInt(args[1])) return false
+                    return args[0] >= args[1]
+                }
+
+                else if (func === 'lt') {
+                    if (!isInt(args[0]) || !isInt(args[1])) return false
+                    return args[0] < args[1]
+                }
+
+                else if (func === 'lte') {
+                    if (!isInt(args[0]) || !isInt(args[1])) return false
+                    return args[0] <= args[1]
+                }
+
+                else if (func === 'not') {
+                    return args[0].toString() !== 'true'
+                }
+
+                else if (func === 'all-true') {
+                    return !args.find(arg => arg.toString() !== 'true')
+                }
+
+                else if (func === 'any-true') {
+                    return !!args.find(arg => arg.toString() === 'true')
+                }
+
+                else if (func === 'none-true') {
+                    return !args.find(arg => arg.toString() === 'true')
+                }
+
+                else if (func === 'var') {
+                    if (isStr(args[0])) {
+                        let varValue = game.variables[args[0]]
+                        if (isStr(varValue) || isInt(varValue)) {
+                            return varValue
+                        } else {
+                            return ''
+                        }
+                    } else {
+                        return ''
+                    }
+                }
+
+                else if (func === 'item-count') {
+                    if (isStr(args[0])) {
+                        let itemCount = game.inventory[args[0]] || 0
+                        return itemCount
+                    } else {
+                        return 0
+                    }
+                }
+
+                else {
+                    return ''
+                }
+
+            } else {
+                return node
+            }
+        }
+
+        // run the next bit of script
+        let runNode = (node, textSettings) => {
+            if (isStr(node)) {
+                addDialogNode(node, textSettings)
+
+            } else if (node.func) {
+                let { func, args = [] } = node
+
+                args = args.map(arg => calcExpression(arg))
+
+                if (func === 'b') {
+                    dialogNodes.push({ type: 'line-break' })
+                }
+
+                else if (func === 'p') {
+                    dialogNodes.push({ type: 'page-break' })
+                }
+
+                else if (func === 'wavy') {
+                    runNodes(args[0], { ...textSettings, style: 'wavy' })
+                }
+
+                else if (func === 'shaky') {
+                    runNodes(args[0], { ...textSettings, style: 'shaky' })
+                }
+
+                else if (func === 'color') {
+                    let color = calcExpression(args[0])
+                    if (!isInt(color)) color = textSettings.color
+                    runNodes(args[1], { ...textSettings, color })
+                }
+
+                else if (func === 'position') {
+                    let position = calcExpression(args[0])
+                    let positionList = ['top', 'center', 'bottom', 'fullscreen']
+                    if (!positionList.includes(position)) position = textSettings.position
+                    runNodes(args[1], { ...textSettings, position })
+                }
+
+                else if (func === 'move-avatar') {
+                    let roomIndex = -1, x = 0, y = 0
+                    if (isInt(args[0]) && isInt(args[1])) {
+                        roomIndex = game.currentRoomIndex
+                        x = args[0] || 0
+                        y = args[1] || 0
+                    }
+                    else if (isStr(args[0]) && isInt(args[1]) && isInt(args[2])) {
+                        roomIndex = game.world.roomList.findIndex(r => r.name === args[0])
+                        x = args[1] || 0
+                        y = args[2] || 0
+                    }
+                    if (roomIndex >= 0) {
+                        x = Math.max(Math.min(x, game.world.roomWidth - 1), 0)
+                        y = Math.max(Math.min(y, game.world.roomHeight - 1), 0)
+                        game.moveAvatar(roomIndex, x, y)
+                    }
+                }
+
+                else if (func === 'move-sprite' && context) {
+                    let roomIndex = -1, x = 0, y = 0
+                    if (isInt(args[0]) && isInt(args[1])) {
+                        roomIndex = game.currentRoomIndex
+                        x = args[0] || 0
+                        y = args[1] || 0
+                    }
+                    else if (isStr(args[0]) && isInt(args[1]) && isInt(args[2])) {
+                        roomIndex = game.world.roomList.findIndex(r => r.name === args[0])
+                        x = args[1] || 0
+                        y = args[2] || 0
+                    }
+                    if (roomIndex >= 0) {
+                        x = Math.max(Math.min(x, game.world.roomWidth - 1), 0)
+                        y = Math.max(Math.min(y, game.world.roomHeight - 1), 0)
+                        if (game.checkTileForSprite(roomIndex, x, y)) {
+                            let room = game.world.roomList[roomIndex]
+                            room.tileList.push({ spriteName: context.sprite.name, x, y })
+                            context.tile.removeMe = true
+                        }
+                    }
+                }
+
+                else if (func === 'place-sprite') {
+                    let roomIndex = -1, x = 0, y = 0
+                    let sprite = game.world.spriteList.find(s => s.name === args[0])
+                    if (isStr(args[0]) && isInt(args[1]) && isInt(args[2])) {
+                        roomIndex = game.currentRoomIndex
+                        x = args[1] || 0
+                        y = args[2] || 0
+                    }
+                    else if (isStr(args[0]) && isStr(args[1]) && isInt(args[2]) && isInt(args[3])) {
+                        roomIndex = game.world.roomList.findIndex(r => r.name === args[1])
+                        x = args[2] || 0
+                        y = args[3] || 0
+                    }
+                    if (sprite && roomIndex >= 0) {
+                        x = Math.max(Math.min(x, game.world.roomWidth - 1), 0)
+                        y = Math.max(Math.min(y, game.world.roomHeight - 1), 0)
+                        if (game.checkTileForSprite(roomIndex, x, y)) {
+                            let room = game.world.roomList[roomIndex]
+                            room.tileList.push({ spriteName: sprite.name, x, y })
+                            game.updateCache()
+                        }
+                    }
+                }
+
+                else if (func === 'transform-avatar') {
+                    let newSprite = game.world.spriteList.find(s => s.name === args[0])
+                    if (newSprite) {
+                        game.avatar = newSprite
+                        game.updateCache()
+                    }
+                }
+
+                else if (func === 'transform-sprite' && context) {
+                    let newSprite = game.world.spriteList.find(s => s.name === args[0])
+                    if (newSprite) {
+                        context.tile.spriteName = newSprite.name
+                        game.updateCache()
+                    }
+                }
+
+                else if (func === 'remove-sprite' && context) {
+                    context.tile.removeMe = true
+                }
+
+                else if (func === 'set-sprite-color' && context) {
+                    if (isInt(args[0]) && args[0] > 0) {
+                        context.sprite.colorIndex = args[0]
+                        game.updateCache()
+                    }
+                    else if (isInt(args[1]) && args[1] > 0) {
+                        let sprite = game.world.spriteList.find(s => s.name === args[0])
+                        if (sprite) {
+                            sprite.colorIndex = args[1]
+                            game.updateCache()
+                        }
+                    }
+                }
+
+                else if (func === 'set-sprite-wall' && context) {
+                    if (args.length === 1) {
+                        context.sprite.isWall = args[0] === 'true'
+                    }
+                    else if (args.length === 2) {
+                        let sprite = game.world.spriteList.find(s => s.name === args[0])
+                        if (sprite) sprite.isWall = args[1] === 'true'
+                    }
+                }
+
+                else if (func === 'set-sprite-item' && context) {
+                    if (args.length === 1) {
+                        context.sprite.isItem = args[0] === 'true'
+                    }
+                    else if (args.length === 2) {
+                        let sprite = game.world.spriteList.find(s => s.name === args[0])
+                        if (sprite) sprite.isItem = args[1] === 'true'
+                    }
+                }
+
+                else if (func === 'set-var') {
+                    if (isStr(args[0]) && (isInt(args[1]) || isStr(args[1]))) {
+                        game.variables[args[0]] = args[1]
+                    }
+                }
+
+                else if (func === 'inc-var') {
+                    if (isStr(args[0])) {
+                        let varValue = game.variables[args[0]] || 0
+                        if (isInt(varValue)) {
+                            let incValue = isInt(args[1]) ? args[1] : 1
+                            game.variables[args[0]] = varValue + incValue
+                        }
+                    }
+                }
+
+                else if (func === 'dec-var') {
+                    if (isStr(args[0])) {
+                        let varValue = game.variables[args[0]] || 0
+                        if (isInt(varValue)) {
+                            let decValue = isInt(args[1]) ? args[1] : 1
+                            game.variables[args[0]] = varValue - decValue
+                        }
+                    }
+                }
+
+                else if (func === 'set-item-count') {
+                    if (isStr(args[0]) && isInt(args[1])) {
+                        let itemCount = Math.max(0, args[1])
+                        game.inventory[args[0]] = itemCount
+                    }
+                }
+
+                else if (func === 'inc-item-count') {
+                    if (isStr(args[0])) {
+                        let itemCount = game.inventory[args[0]] || 0
+                        let incValue = isInt(args[1]) ? args[1] : 1
+                        game.inventory[args[0]] = itemCount + incValue
+                    }
+                }
+
+                else if (func === 'dec-item-count') {
+                    if (isStr(args[0])) {
+                        let itemCount = game.inventory[args[0]] || 0
+                        let incValue = isInt(args[1]) ? args[1] : 1
+                        game.inventory[args[0]] = Math.max(0, itemCount - incValue)
+                    }
+                }
+
+                else if (func === 'set-palette') {
+                    let room, palette
+                    if (isStr(args[0]) && isStr(args[1])) {
+                        room = game.world.roomList.find(r => r.name === args[0])
+                        palette = game.world.paletteList.find(p => p.name === args[1])
+                    }
+                    else if (isStr(args[0])) {
+                        room = game.currentRoom
+                        palette = game.world.paletteList.find(p => p.name === args[0])
+                    }
+                    if (room && palette) {
+                        room.paletteName = palette.name
+                        game.updateCache()
+                    }
+                }
+
+                else if (func === 'set-music') {
+                    let room, music
+                    if (isStr(args[0]) && isStr(args[1])) {
+                        room = game.world.roomList.find(r => r.name === args[0])
+                        music = game.world.musicList.find(m => m.name === args[1])
+                    }
+                    else if (isStr(args[0])) {
+                        room = game.currentRoom
+                        music = game.world.musicList.find(m => m.name === args[0])
+                    }
+                    if (room && music) {
+                        room.musicName = music.name
+                        game.updateMusic()
+                    }
+                }
+
+                else if (func === 'if') {
+                    if (args.length >= 2) {
+                        let result = (args[0].toString() === 'true')
+                        if (result && isArr(args[1])) {
+                            runNodes(args[1], textSettings)
+                        }
+                        else if (!result && isArr(args[2])) {
+                            runNodes(args[2], textSettings)
+                        }
+                    }
+                }
+
+                else {
+                    addDialogNode(calcExpression(node), textSettings)
+                }
+            }
+        }
+
+        // run a list of scripts
+        let runNodes = (nodes = [], textSettings) => {
+            nodes.forEach(node => {
+                runNode(node, textSettings)
+            })
+        }
+
+        // run the actual script already
+        runNodes(parsedScript, defaultTextSettings)
+
+        // display any dialog created from the script
+        if (dialogNodes.length > 0) game.startDialog(dialogNodes)
+    },
+
+    parse: (text) => {
+        let i = 0
+
+        let parseTextNode = (closingFunc) => {
+            let nodes = []
+            let textSoFar = ''
+
+            let finalizeNode = () => {
+                if (textSoFar) nodes.push(textSoFar)
+                textSoFar = ''
+            }
+
+            while (i < text.length) {
+                let char = text.charAt(i)
+                i++
+                if (char === '{') {
+                    finalizeNode()
+                    let funcNode = parseFuncNode(text)
+                    if (closingFunc && funcNode.func === closingFunc) {
+                        return nodes
+                    }
+                    nodes.push(funcNode)
+                } else {
+                    textSoFar += char
+                }
+            }
+
+            finalizeNode()
+            return nodes
+        }
+
+        let parseFuncNode = () => {
+            let funcName = ''
+            while (i < text.length) {
+                let char = text.charAt(i)
+                if (char === ' ' || char === '\n' || char === '\t') {
+                    i++
+                    break
+                } else if (char === '{' || char === '}') {
+                    break
+                } else {
+                    funcName += char
+                }
+                i++
+            }
+            funcName = funcName.trim()
+
+            let funcArgs = []
+            let nextArg = ''
+
+            let addArg = () => {
+                nextArg = nextArg.trim()
+                if (!nextArg) return
+                if (parseInt(nextArg) === parseFloat(nextArg) && !isNaN(parseInt(nextArg))) {
+                    nextArg = parseInt(nextArg)
+                }
+                funcArgs.push(nextArg)
+                nextArg = ''
+            }
+
+            let finalizeNode = () => {
+                return {
+                    func: funcName,
+                    args: funcArgs
+                }
+            }
+
+            let insideQuote = false
+            while (i < text.length) {
+                let char = text.charAt(i)
+                i++
+                if (insideQuote) {
+                    if (char === '"') {
+                        insideQuote = false
+                        addArg()
+                    } else if (char === '\\' && text.charAt(i) === '"') {
+                        i++
+                        nextArg += '"'
+                    } else {
+                        nextArg += char
+                    }
+                } else {
+                    if (char === '"') {
+                        insideQuote = true
+                    } else if (char === ' ' || char === '\n' || char === '\t') {
+                        addArg()
+                    } else if (char === '{') {
+                        addArg()
+                        funcArgs.push(parseFuncNode(text))
+                    } else if (char === '}') {
+                        addArg()
+                        if (funcName === 'if') {
+                            let ifNodes = parseTextNode('/if')
+                            let elseNodes = []
+                            let elseIndex = ifNodes.findIndex(n => n.func === 'else')
+                            if (elseIndex > -1) {
+                                elseNodes = ifNodes.slice(elseIndex + 1)
+                                ifNodes = ifNodes.slice(0, elseIndex)
+                            }
+                            funcArgs.push(ifNodes)
+                            if (elseNodes.length) funcArgs.push(elseNodes)
+                        } else if (funcName === 'color') {
+                            funcArgs.push(parseTextNode('/color'))
+                        } else if (funcName === 'wavy') {
+                            funcArgs.push(parseTextNode('/wavy'))
+                        } else if (funcName === 'shaky') {
+                            funcArgs.push(parseTextNode('/shaky'))
+                        } else if (funcName === 'position') {
+                            funcArgs.push(parseTextNode('/position'))
+                        }
+                        return finalizeNode()
+                    } else {
+                        nextArg += char
+                    }
+                }
+            }
+
+            return finalizeNode()
+        }
+
+        return parseTextNode()
+    }
+}
+
+})()
+</script>
+
+<script>
+let Game = (() => {
+
+return class {
+
+    constructor(world, el) {
+        this.world = world
+
+        this.wrapper = document.createElement('div')
+        this.wrapper.style.position = 'relative'
+        this.wrapper.style.paddingTop = '100%'
+        this.wrapper.style.margin = '0 auto'
+        el.appendChild(this.wrapper)
+
+        this.canvas = document.createElement('canvas')
+        this.canvas.width = world.roomWidth * world.spriteWidth
+        this.canvas.height = world.roomHeight * world.spriteHeight
+        this.canvas.style.position = 'absolute'
+        this.canvas.style.display = 'block'
+        this.canvas.style.top = '0'
+        this.canvas.style.left = '0'
+        this.canvas.style.width = '100%'
+        this.wrapper.appendChild(this.canvas)
+        this.context = this.canvas.getContext('2d')
+
+        this.textCanvas = document.createElement('canvas')
+        this.textCanvas.width = world.roomWidth * world.spriteWidth * world.fontResolution
+        this.textCanvas.height = world.roomHeight * world.spriteHeight * world.fontResolution
+        this.textCanvas.style.position = 'absolute'
+        this.textCanvas.style.display = 'block'
+        this.textCanvas.style.top = '0'
+        this.textCanvas.style.left = '0'
+        this.textCanvas.style.width = '100%'
+        this.wrapper.appendChild(this.textCanvas)
+        this.textContext = this.textCanvas.getContext('2d')
+
+        this.frameRate = 400
+        this.dialogRate = 50
+
+        this.begin = () => {
+            // set up avatar
+            this.avatar =
+                this.world.spriteList.find(sprite => sprite.isAvatar)
+                || this.world.spriteList[0]
+            this.avatarX = 0
+            this.avatarY = 0
+            this.nextX = 0
+            this.nextY = 0
+            this.inventory = {}
+            this.variables = {}
+
+            // initialize animations variables
+            this.lastTimestamp = 0
+            this.timeToNextFrame = 0
+            this.timeToNextInput = 0
+            this.frameIndex = 0
+            this.spriteFrameList = {}
+            this.avatarDirection = 'right'
+
+            // initialize dialog variables
+            this.dialogPages = []
+            this.pageIsComplete = false
+
+            // get starting room
+            this.moveRooms(this.startingRoom(), true)
+            this.nextRoomIndex = this.currentRoomIndex
+
+            // run game start script
+            this.runScript(this.world.worldScriptList, 'on-start')
+
+            // initialize event handling
+            this.keyActive = false
+            this.keyCodes = []
+            this.addEventListeners()
+
+            // kick off update loop
+            this.update(0)
+        }
+
+        this.end = () => {
+            // stop any music that's playing
+            MusicPlayer.stopSong()
+
+            // clean up event listeners
+            this.removeEventListeners()
+
+            // stop animation loop
+            window.cancelAnimationFrame(this.animationRequest)
+        }
+
+        this.update = (timestamp) => {
+            let dt = timestamp - this.lastTimestamp
+            this.lastTimestamp = timestamp
+
+            // progress frames
+            this.timeToNextFrame -= dt
+            if (this.timeToNextFrame <= 0) {
+                this.frameIndex++
+                if (this.frameIndex >= 12) this.frameIndex = 0
+                this.timeToNextFrame = this.frameRate
+            }
+
+            // update avatar
+            this.timeToNextInput -= dt
+            if (this.timeToNextInput <= 0) {
+                if (this.dialogPages.length === 0) this.updateAvatar()
+                this.timeToNextInput = 200
+            }
+
+            // get current tiles and colors
+            let tileList = this.currentRoom.tileList
+            let palette = this.world.paletteList[this.currentPaletteIndex]
+            let colorList = palette.colorList
+            
+            // draw background
+            let canvasWidth = this.world.spriteWidth * this.world.roomWidth
+            let canvasHeight = this.world.spriteHeight * this.world.roomHeight
+            this.context.fillStyle = colorList[0]
+            this.context.fillRect(0, 0, canvasWidth, canvasHeight)
+
+            // draw sprites
+            tileList.forEach(tile => {
+                let { spriteName, x, y } = tile
+                let sprite = this.world.spriteList.find(sprite => sprite.name === spriteName)
+                if (sprite && !sprite.isAvatar) {
+                    let xOffset = x * sprite.width
+                    let yOffset = y * sprite.height
+                    let frameList = this.spriteFrameList[sprite.name]
+                    let frameIndex = this.frameIndex % frameList.length
+                    let frameData = frameList[frameIndex]
+                    this.context.drawImage(frameData, xOffset, yOffset)
+                }
+            })
+
+            // draw player avatar
+            this.drawAvatar()
+
+            // draw dialog
+            this.updateDialog(timestamp)
+
+            // see you next frame!
+            this.animationRequest = window.requestAnimationFrame(this.update)
+        }
+
+        this.updateAvatar = () => {
+            let {
+                worldWidth,
+                worldHeight,
+                worldWrapHorizontal,
+                worldWrapVertical,
+                roomWidth,
+                roomHeight
+            } = this.world
+
+            let x = this.avatarX
+            let y = this.avatarY
+            let roomX = Math.floor(this.currentRoomIndex % worldWidth)
+            let roomY = Math.floor(this.currentRoomIndex / worldWidth)
+            let stopMoving = false
+
+            // check input
+            if (this.keyActive) {
+                let key = this.keyCodes[this.keyCodes.length - 1]
+                if (key === 'ArrowLeft') {
+                    x--
+                    this.avatarDirection = 'left'
+                } else if (key === 'ArrowRight') {
+                    x++
+                    this.avatarDirection = 'right'
+                } else if (key === 'ArrowUp') {
+                    y--
+                } else if (key === 'ArrowDown') {
+                    y++
+                }
+            } else if (this.pointerIsDown || this.oneMoreMove) {
+                let dx = this.pointerEndPos.x - this.pointerStartPos.x
+                let dy = this.pointerEndPos.y - this.pointerStartPos.y
+
+                if (dx * dx + dy * dy > 20 * 20) {
+                    let angle = Math.atan2(dy, dx) * 180 / Math.PI + 180
+                    if (angle > 45 && angle <= 135) {
+                        y--
+                    } else if (angle > 135 && angle <= 225) {
+                        x++
+                        this.avatarDirection = 'right'
+                    } else if (angle > 225 && angle <= 315) {
+                        y++
+                    } else {
+                        x--
+                        this.avatarDirection = 'left'
+                    }
+                    this.movesSinceLastTouch++
+                    this.oneMoreMove = false
+                }
+            }
+
+            // check if avatar is going outside of room bounds
+            if (x < 0) {
+                x = roomWidth - 1
+                roomX--
+            }
+            if (x >= roomWidth) {
+                x = 0
+                roomX++
+            }
+            if (y < 0) {
+                y = roomHeight - 1
+                roomY--
+            }
+            if (y >= roomHeight) {
+                y = 0
+                roomY++
+            }
+
+            // check if avatar is going outside of world bounds
+            if (roomX < 0) {
+                if (worldWrapHorizontal) roomX = worldWidth - 1
+                else stopMoving = true
+            }
+            if (roomX >= worldWidth) {
+                if (worldWrapHorizontal) roomX = 0
+                else stopMoving = true
+            }
+            if (roomY < 0) {
+                if (worldWrapVertical) roomY = worldHeight - 1
+                else stopMoving = true
+            }
+            if (roomY >= worldHeight) {
+                if (worldWrapVertical) roomY = 0
+                else stopMoving = true
+            }
+            if (stopMoving) return
+
+            // move avatar
+            let roomIndex = (roomY * worldWidth) + roomX
+            this.moveAvatar(roomIndex, x, y)
+        }
+
+        this.moveAvatar = (roomIndex, x, y) => {
+            let stopMoving = false
+
+            // reset next positions
+            this.nextRoomIndex = roomIndex
+            this.nextX = x
+            this.nextY = y
+
+            // check for tile interactions
+            let tileIsClear = this.checkTileForAvatar(this.nextRoomIndex, this.nextX, this.nextY)
+            if (!tileIsClear) stopMoving = true
+
+            // remove any tiles marked for death
+            this.world.roomList.forEach(r => {
+                r.tileList = r.tileList.filter(tile => !tile.removeMe)
+            })
+
+            // finalize avatar movement
+            if (!stopMoving) {
+                this.avatarX = this.nextX
+                this.avatarY = this.nextY
+                this.moveRooms(this.nextRoomIndex)
+            }
+        }
+
+        this.checkTileForAvatar = (roomIndex, x, y) => {
+            let room = this.world.roomList[roomIndex]
+            let tileIsClear = true
+
+            // look at each tile in the room
+            room.tileList.forEach(tile => {
+                // ignore tiles that player is not going to be standing on
+                if (tile.x !== x || tile.y !== y) return
+
+                // get sprite data for the current tile
+                let sprite = this.world.spriteList.find(s => s.name === tile.spriteName)
+
+                // ignore sprite if it's the avatar or if it doesn't exist
+                if (!sprite || sprite.isAvatar) return
+
+                // it's a wall - block the way!
+                if (sprite.isWall) {
+                    tileIsClear = false
+                }
+
+                // it's an item - pick it up!
+                if (sprite.isItem) {
+                    this.addToInventory(sprite.name, 1)
+                    tile.removeMe = true
+                }
+
+                // run the sprite's script (if player's not already on this tile)
+                if (this.avatarX !== x || this.avatarY !== y) {
+                    this.runScript(sprite.scriptList, 'on-push', { sprite, tile, roomIndex })
+                }
+            })
+
+            // return whether tile is blocking player movement
+            return tileIsClear
+        }
+
+        this.checkTileForSprite = (roomIndex, x, y) => {
+            let room = this.world.roomList[roomIndex]
+            let tileIsClear = true
+
+            // look at each tile in the room
+            room.tileList.forEach(tile => {
+                // ignore tiles that player is not going to be standing on
+                if (tile.x !== x || tile.y !== y) return
+
+                // get sprite data for the current tile
+                let sprite = this.world.spriteList.find(s => s.name === tile.spriteName)
+
+                // it's a wall - block the way!
+                if (sprite.isWall) tileIsClear = false
+            })
+
+            // return whether tile is blocking player movement
+            return tileIsClear
+        }
+
+        this.startDialog = (dialogNodes) => {
+            this.dialogPages = Text.nodesToPages(
+                dialogNodes,
+                this.world.fontData,
+                this.textCanvas.width - (this.world.fontData.width * 6),
+                2
+            )
+            this.pageStartTimestamp = null
+        }
+
+        this.progressDialog = () => {
+            if (this.pageIsComplete) {
+                this.pageStartTimestamp = null
+                this.dialogPages.shift()
+            } else {
+                this.pageIsComplete = true
+            }
+        }
+
+        this.updateDialog = (timestamp) => {
+            this.textContext.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height)
+            if (this.dialogPages.length === 0) return
+
+            if (!this.pageStartTimestamp) this.pageStartTimestamp = timestamp
+            let dt = timestamp - this.pageStartTimestamp
+
+            let maxChars = this.pageIsComplete ? -1 : Math.floor(dt / this.dialogRate)
+            
+            let allCharsDrawn = Text.drawPage(
+                this.textContext,
+                this.world.fontData,
+                this.world.fontDirection,
+                this.dialogPages[0],
+                timestamp,
+                maxChars
+            )
+            if (allCharsDrawn) {
+                this.pageIsComplete = true
+            }
+        }
+
+        this.addToInventory = (item, quantity) => {
+            // add item to the player's inventory
+            if (!this.inventory[item]) this.inventory[item] = 0
+            this.inventory[item] += quantity
+            if (this.inventory[item] < 0) this.inventory[item] = 0
+        }
+
+        this.startingRoom = () => {
+            // find the room that the player starts in
+            let roomIndex = 0
+            this.world.roomList.forEach((room, i) => {
+                room.tileList.forEach(tile => {
+                    if (tile.spriteName === this.avatar.name) {
+                        roomIndex = i
+                        this.avatarX = tile.x
+                        this.avatarY = tile.y
+                    }
+                })
+            })
+            return roomIndex
+        }
+
+        this.moveRooms = (roomIndex, startOfGame) => {
+            // ignore if player is already in this room
+            if (this.currentRoomIndex === roomIndex) return
+
+            // run exit script for old room
+            if (!startOfGame && this.currentRoom) {
+                this.runScript(this.currentRoom.scriptList, 'on-exit')
+            }
+
+            // update room references
+            this.currentRoomIndex = roomIndex
+            this.currentRoom = this.world.roomList[this.currentRoomIndex]
+
+            // update color palette
+            this.currentPaletteIndex = this.world.paletteList.findIndex(p => p.name === this.currentRoom.paletteName)
+            
+            // play new music
+            this.updateMusic()
+
+            // cache new sprites
+            this.updateCache()
+
+            // run enter script for new room
+            if (!startOfGame) {
+                this.runScript(this.currentRoom.scriptList, 'on-enter')
+            }
+        }
+
+        this.updateMusic = () => {
+            // find music for current room
+            let musicIndex = this.world.musicList.findIndex(m => m.name === this.currentRoom.musicName)
+            
+            // stop previous music and play new music, if changed
+            if (musicIndex !== this.currentMusicIndex) {
+                this.currentMusicIndex = musicIndex
+                MusicPlayer.stopSong()
+                let music = this.world.musicList[musicIndex]
+                if (music) MusicPlayer.playSong(music)
+            }
+        }
+
+        this.runScript = (scriptList, scriptName, context) => {
+            // ignore non-existent scripts
+            if (!scriptList || !scriptList[scriptName]) return
+
+            // get script
+            let script = scriptList[scriptName]
+
+            // run script
+            Script.run(script, this, context)
+        }
+
+        this.nextFrames = () => {
+            Object.keys(this.spriteFrameIndexList).forEach(key => {
+                let frameIndex = this.spriteFrameIndexList[key]
+
+                this.frameIndex = frameIndex || 0
+                if (this.frameIndex >= this.frameCanvasList.length) {
+                    this.frameIndex = 0
+                }
+            })
+        }
+
+        this.drawFrame = (frame, width, context) => {
+            frame.forEach((pixel, i) => {
+                let x = Math.floor(i % width)
+                let y = Math.floor(i / width)
+                if (pixel) context.fillRect(x, y, 1, 1)
+            })
+        }
+
+        this.getFrameData = (frame, color, flipped, bgColor) => {
+            let { spriteWidth, spriteHeight } = this.world
+
+            let frameCanvas = document.createElement('canvas')
+            frameCanvas.width = spriteWidth
+            frameCanvas.height = spriteHeight
+
+            let context = frameCanvas.getContext('2d')
+            if (flipped) {
+                context.translate(spriteWidth, 0)
+                context.scale(-1, 1)
+            }
+
+            if (bgColor) {
+                context.fillStyle = bgColor
+                context.fillRect(0, 0, spriteWidth, spriteHeight)
+            }
+
+            context.fillStyle = color
+            this.drawFrame(frame, spriteWidth, context)
+            
+            let frameData = frameCanvas
+            return frameData
+        }
+
+        this.cacheSprite = (sprite, colorList, flipped) => {
+            let name = sprite.name + (flipped ? '__flipped' : '')
+            let colorIndex = sprite.colorIndex
+            while (colorIndex > 0 && !colorList[colorIndex]) colorIndex--
+            let color = colorList[colorIndex]
+            let bgColor = sprite.isTransparent ? null : colorList[0]
+            
+            if (sprite && !this.spriteFrameList[name]) {
+                this.spriteFrameList[name] = sprite.frameList.map(frame => {
+                    return this.getFrameData(frame, color, flipped, bgColor)
+                })
+            }
+        }
+
+        this.updateCache = () => {
+            let tileList = this.currentRoom.tileList
+            this.currentPaletteIndex = this.world.paletteList.findIndex(p => p.name === this.currentRoom.paletteName)
+            let palette = this.world.paletteList[this.currentPaletteIndex]
+            let colorList = palette.colorList
+
+            this.spriteFrameList = {}
+
+            tileList.forEach(tile => {
+                let { spriteName } = tile
+                let sprite = this.world.spriteList.find(s => s.name === spriteName)
+                this.cacheSprite(sprite, colorList)
+            })
+
+            this.cacheSprite(this.avatar, colorList)
+            this.cacheSprite(this.avatar, colorList, true)
+        }
+
+        this.drawAvatar = () => {
+            let { spriteWidth, spriteHeight } = this.world
+            let name = this.avatar.name
+            if (this.avatarDirection === 'left') name += '__flipped'
+
+            let frameList = this.spriteFrameList[name]
+            let frameIndex = this.frameIndex % frameList.length
+            let frameData = frameList[frameIndex]
+            this.context.drawImage(frameData, this.avatarX * spriteWidth, this.avatarY * spriteHeight)
+        }
+
+        this.addEventListeners = () => {
+            document.addEventListener('keydown', this.keyDown)
+            document.addEventListener('keyup', this.keyUp)
+
+            this.wrapper.addEventListener('mousedown', this.pointerStart)
+            document.addEventListener('mouseup', this.pointerEnd)
+            document.addEventListener('mousemove', this.pointerMove)
+    
+            this.wrapper.addEventListener('touchstart', this.pointerStart, { passive: false })
+            document.addEventListener('touchend', this.pointerEnd, { passive: false })
+            document.addEventListener('touchcancel', this.pointerEnd, { passive: false })
+            document.addEventListener('touchmove', this.pointerMove, { passive: false })
+
+            window.addEventListener('resize', this.resize)
+            this.resize()
+        }
+
+        this.removeEventListeners = () => {
+            document.removeEventListener('keydown', this.keyDown)
+            document.removeEventListener('keyup', this.keyUp)
+
+            this.wrapper.removeEventListener('mousedown', this.pointerDown)
+            document.removeEventListener('mouseup', this.pointerEnd)
+            document.removeEventListener('mousemove', this.pointerMove)
+    
+            this.wrapper.removeEventListener('touchstart', this.pointerDown)
+            document.removeEventListener('touchend', this.pointerEnd)
+            document.removeEventListener('touchcancel', this.pointerEnd)
+            document.removeEventListener('touchmove', this.pointerMove)
+            
+            window.removeEventListener('resize', this.resize)
+        }
+
+        this.keyDown = (e) => {
+            if (e.key.startsWith('Arrow')) e.preventDefault() // prevent arrow keys from scrolling page
+            if (e.repeat) return // ignore key repeats
+            if (e.key === 'm') {
+                window.muteMusic = !window.muteMusic
+            }
+            else if (this.dialogPages.length > 0) {
+                if (e.key.startsWith('Arrow')) {
+                    this.progressDialog()
+                }
+            } else {
+                this.keyActive = true
+                this.keyCodes.push(event.key)
+                this.timeToNextInput = 0
+            }
+        }
+
+        this.keyUp = (e) => {
+            this.keyCodes = this.keyCodes.filter(keyCode => keyCode !== e.key)
+            if (this.keyCodes.length === 0) this.keyActive = false
+        }
+
+        this.pointerStart = (e) => {
+            e.preventDefault()
+            let pointer = e.touches ? e.touches[0] : e
+            this.pointerIsDown = true
+            this.movesSinceLastTouch = 0
+            this.pointerStartPos = {
+                x: pointer.clientX,
+                y: pointer.clientY
+            }
+            this.pointerEndPos = {
+                x: pointer.clientX,
+                y: pointer.clientY
+            }
+            this.timeToNextInput = 0
+        }
+
+        this.pointerMove = (e) => {
+            if (this.pointerIsDown) {
+                e.preventDefault()
+                let pointer = e.touches ? e.touches[0] : e
+                this.pointerEndPos = {
+                    x: pointer.clientX,
+                    y: pointer.clientY
+                }
+            }
+        }
+
+        this.pointerEnd = (e) => {
+            if (this.pointerIsDown) {
+                e.preventDefault()
+                this.pointerIsDown = false
+                if (this.dialogPages.length > 0) {
+                    this.progressDialog()
+                } else {
+                    if (this.movesSinceLastTouch === 0) {
+                        this.oneMoreMove = true
+                        this.timeToNextInput = 0
+                    }
+                }
+            }
+        }
+
+        this.resize = () => {
+            let width = this.canvas.width
+            let height = this.canvas.height
+            let widthRatio = width > height ? 1 : width / height
+            let heightRatio = width > height ? height / width : 1
+            this.wrapper.style.width = widthRatio * 100 + '%',
+            this.wrapper.style.paddingTop = heightRatio * 100 + '%'
+        }
+    }
+
+}
+
+})()
+</script>
+
+<script>
+window.onload = () => {
+    let wrapper = document.getElementById('game-wrapper')
+    this.game = new Game(window.GAME_DATA, wrapper)
+    this.game.begin()
+}
+</script>
+
+</head>
+
+<body>
+<div id='game-wrapper'></div>
+</body>
+
+</html>

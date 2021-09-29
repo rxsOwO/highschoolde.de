@@ -1,0 +1,70 @@
+.mainHeader{
+    text-align: center;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+
+.search {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.searchedHeading {
+    color:red;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.link-1 {
+    margin-left: 100px;
+    margin-top: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+.paraheader {
+    padding: 0;
+    font-size: 30px;
+}
+
+.searchedHeading a{
+    text-decoration: none;
+    color:red;
+}
+
+.searchedHeading a:hover{
+    color:darkred;
+}
+
+.searchedHeading a:active{
+    color: rgb(163, 13, 13);
+}
+.mustacheHeading {
+    color:black;
+    text-align: center;
+    background-image: url(images/oldmanmustache.jpg);
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+.font {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+}
+.margin {
+    margin-left: 140px;
+}
+.fontalign {
+    text-align: center;
+}
+.myConduitTopLink {
+    text-decoration: none;
+    color: blue;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.myConduitVideoLink {
+    text-decoration: none;
+    margin-left: 100px;
+    margin-top: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+}

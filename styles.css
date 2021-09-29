@@ -1,0 +1,25 @@
+.mainHeader{
+    text-align: center;
+    color: Black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+.jesse{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    width: 35%;
+    height: 35%;
+}
+.mainHeaderJesse{
+    text-align: center;
+    color: rgb(170, 170, 9);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+.funny {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}

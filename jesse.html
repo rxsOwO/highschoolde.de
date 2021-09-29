@@ -10,7 +10,16 @@
         <h1>jesse's mind: the secrets are within</h1>
         </header>
         <hr>
-        <img src="sandpaper.png" alt="uwu" width="400" height="400" class="jesse"></a>
-        <p class="funny">I am in unending termoil. They never stop. The voices. All i hear is, "HHAHA JESSE.PNG" Even though i know i am so much more than a funny face. I am a real person. But they never listen, will my painful existence ever end?</p>
+        <p class="funny">Sadness Points: <span id="score">0</span></p>
+        <img src="sandpaper.png" alt="uwu" width="400" height="400" class="jesse" onclick="addToScore(1)"></a>
+        <p class="funny">I am in unending termoil. They never stop. The voices. All I hear is, "HHAHA JESSE.PNG" Even though I know I am so much more than a funny face. I am a real person. But they never listen, will my painful existence ever end?</p>
+        <script>
+            var score = 0;
+
+            function addToScore(amount) {
+                score = score + amount;
+                document.getElementById("score").innerHTML = score;
+            }
+        </script>
     </body>
 <html>

@@ -4,6 +4,7 @@
     <head>
         <title>jesse's mind</title>
         <link rel="stylesheet" href="styles.css">
+        <script>var isWindmillClicked = false;</script>
     </head>
     <body>
         <header class="mainHeaderJesse">
@@ -11,14 +12,56 @@
         </header>
         <hr>
         <p class="funny">Sadness Points: <span id="score">0</span></p>
-        <img src="sandpaper.png" alt="uwu" width="400" height="400" class="jesse" onclick="addToScore(1)"></a>
-        <p class="funny">I am in unending termoil. They never stop. The voices. All I hear is, "HHAHA JESSE.PNG" Even though I know I am so much more than a funny face. I am a real person. But they never listen, will my painful existence ever end?</p>
+        <img src="sandpaper.png" alt="uwu" width="400" height="400" class="reed" onclick="addToScore(1);"></a>
+        <p class="funny">Sadness Points Per Second: <span id="CPPS">0</span></p>
+        <button id="windmill" class="center" style="left: 45%;" onclick="if(score > 250){isWindmillClicked = true;score = score - 250;}"><span id="windmillButtonText">Locked</span></button>
         <script>
+            
             var score = 0;
+            var CPPS = 0;
+            var isWindmillClicked = false;
+
+            setInterval(ClicksForYou,1000);
+            setInterval(normalStuff,1000);
 
             function addToScore(amount) {
                 score = score + amount;
                 document.getElementById("score").innerHTML = score;
+                document.getElementById("CPPS").innerHTML = CPPS;
+            }
+            
+            
+            function jesseClicksForYou(bool, bonus) {
+                if(bool === true){
+                   score = score + bonus;
+                }
+                document.getElementById("score").innerHTML = score;
+            }
+            function ClicksForYou() {
+                
+                if(isWindmillClicked === true) {
+                    jesseClicksForYou(isWindmillClicked, 2);
+                    console.log("why");
+                    CPPS = 2;
+                    isWindmillClicked = true;
+                    document.getElementById("windmillButtonText").innerHTML = "Bought";
+                }
+                else {
+                    console.log("yay");
+                }
+                document.getElementById("score").innerHTML = score;
+                document.getElementById("CPPS").innerHTML = CPPS;
+                console.log(isWindmillClicked);
+            }
+            function normalStuff() {
+                document.getElementById("score").innerHTML = score;
+                document.getElementById("CPPS").innerHTML = CPPS;
+                console.log(isWindmillClicked);
+                if(score > 100){
+                    if(isWindmillClicked === false) {
+                        document.getElementById("windmillButtonText").innerHTML = "Windmill Pokes Man For You (250 points)";
+                    }
+                }
             }
         </script>
     </body>

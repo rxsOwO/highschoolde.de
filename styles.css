@@ -1,0 +1,90 @@
+.mainHeader{
+    text-align: center;
+    color: Black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    animation-duration: 1s;
+    animation-name: slidedown;
+    animation-iteration-count: 1;
+}
+.jesse{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    width: 35%;
+    height: 35%;
+    animation-duration: 2s;
+    animation-name: slidein;
+    animation-iteration-count: 1;
+}
+.reed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    width: 35%;
+    height: 35%;
+}
+.mainHeaderJesse{
+    text-align: center;
+    color: rgb(170, 170, 9);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    animation-duration: 1s;
+    animation-name: jump;
+    animation-iteration-count: 1;
+}
+.funny {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+@keyframes slidein {
+    0% {
+        margin-left: -50%;
+    }
+    50% {
+        margin-left: -50%;
+    }
+    100% {
+        margin-left: 32.5%;
+    }
+}
+@keyframes slidedown {
+    0% {
+        margin-top: -50%;
+    }
+    100% {
+        margin-top: 0%;
+    }
+}
+@keyframes jump {
+    0% {
+        color: tomato;
+    }
+    50% {
+        color:wheat;
+    }
+    100% {
+        color:salmon;
+    }
+}
+.center {
+    margin: 0;
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    /*-ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+input, textarea,button {
+    -webkit-appearance: none;
+    border-radius: 0;
+    -webkit-border-radius:0px;
+    object-fit: contain;
+}
